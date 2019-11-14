@@ -16,6 +16,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	final int IN_GAME = 2;
 	final int END_STATE = 3;
 	final int R_start = 0;
+	boolean KPressed = false;
+	
+	Object object;
+	Player player = new Player(0, 0, 17, 38);
+	Manager manager = new Manager(player);
 	
 	int currentState = MAIN_MENU;
 	int currentRoom = R_start;
@@ -37,7 +42,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void updateGame() {
-		
+		manager.p.update();
 	}
 	void updateEnd() {
 		
@@ -50,7 +55,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void drawGame(Graphics g) {
-		
+		manager.p.draw(g);
 	}
 	void drawEnd(Graphics g) {
 		
@@ -70,7 +75,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		if(currentState == END_STATE) {
 			drawEnd(g);
 		}
-		System.out.println(currentState);
+		
 	}
 	
 	@Override
@@ -100,27 +105,47 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(currentState == MAIN_MENU && e.getKeyCode() != KeyEvent.VK_T) {
-			currentState = IN_GAME;
-		}
-		else {
-			currentState = TUTORIAL;
-		}
-		if(currentState == TUTORIAL) {
-			currentState = MAIN_MENU;
+		if(KPressed == false) {
+			if (currentState == MAIN_MENU && e.getKeyCode() == KeyEvent.VK_T){
+				currentState = TUTORIAL;
+			}
+			else if (currentState == MAIN_MENU) {
+				currentState = IN_GAME;
+			}
+			else if(currentState == TUTORIAL) {
+				currentState = MAIN_MENU;
+			}
+			else if(currentState == END_STATE) {
+				currentState = MAIN_MENU;
+			}
+			KPressed = true;
 		}
 		if(currentState == IN_GAME) {
-			currentState++;
-		}
-		if(currentState == END_STATE) {
-			currentState = MAIN_MENU;
+			if(e.getKeyCode() == KeyEvent.VK_LEFT){
+				manager.p.left = true;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+				manager.p.right = true;
+			}
+
+			if(e.getKeyCode() == KeyEvent.VK_SPACE){
+				manager.p.jump();
+			}
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(currentState == IN_GAME) {
+			if(e.getKeyCode() == KeyEvent.VK_LEFT){
+				manager.p.left = false;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+				manager.p.right = false;
+			}
+		}
+		KPressed = false;
 	}
 
 }

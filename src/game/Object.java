@@ -11,6 +11,14 @@ public class Object {
 	int height;
 	int health;
 	boolean isAlive = true;
+	
+	public boolean left = false;
+	public boolean right = false;
+	public int facing;
+	public final static int FACING_LEFT = 0;
+	public final static int FACING_RIGHT = 1;
+	static int gravity = 1;
+	
 	Rectangle cBox = new Rectangle();
 	
 	public Object(int x, int y, int width, int height){
