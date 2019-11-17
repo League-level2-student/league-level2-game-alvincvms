@@ -34,7 +34,9 @@ public class Player extends Object{
 			x += xVelocity;
 		}
 		
-		yVelocity += gravity;
+		if(yVelocity < 20) {
+			yVelocity += gravity;
+		}
 		y += yVelocity;
 		
 		if(y >= yLimit - height){
@@ -49,7 +51,7 @@ public class Player extends Object{
 			x = xLimitL;
 		}
 		
-		cBox.setBounds(x, y, width, height);
+		super.update();
 	}
 	
 	void draw(Graphics g) {
@@ -57,7 +59,14 @@ public class Player extends Object{
 		g.fillRect(x, y, width, height);
 	}
 	
-	public void setYLimit(int limit){
+	public void setYLimit(int limit) {
 		yLimit = limit;
+	}
+	
+	public void setXLimitL(int limit) {
+		xLimitL = limit;
+	}
+	public void setXLimitR(int limit) {
+		xLimitR = limit;
 	}
 }

@@ -27,6 +27,7 @@ public class PixelLegend {
 		window.pack();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
+		window.setResizable(false);
 		game.start();
 	}
 }

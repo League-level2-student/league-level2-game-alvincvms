@@ -32,6 +32,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void start() {
+		manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-100,70,10));
 		timer.start();
 	}
 	
@@ -42,7 +43,14 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void updateGame() {
+		manager.checkPlatformCollision();
 		manager.p.update();
+		for(Platform p : manager.platforms) {
+			p.update();
+		}
+		for(SPlatform p : manager.sPlatforms) {
+			p.update();
+		}
 	}
 	void updateEnd() {
 		
@@ -56,6 +64,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	void drawGame(Graphics g) {
 		manager.p.draw(g);
+		for(Platform p : manager.platforms) {
+			p.draw(g);
+		}
+		for(SPlatform p : manager.sPlatforms) {
+			p.draw(g);
+		}
 	}
 	void drawEnd(Graphics g) {
 		
@@ -123,9 +137,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		if(currentState == IN_GAME) {
 			if(e.getKeyCode() == KeyEvent.VK_LEFT){
 				manager.p.left = true;
+				manager.p.facing = Object.FACING_LEFT;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 				manager.p.right = true;
+				manager.p.facing = Object.FACING_RIGHT;
 			}
 
 			if(e.getKeyCode() == KeyEvent.VK_SPACE){
