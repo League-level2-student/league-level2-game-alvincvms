@@ -144,9 +144,20 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				manager.p.facing = Object.FACING_RIGHT;
 			}
 
+			
 			if(e.getKeyCode() == KeyEvent.VK_SPACE){
-				manager.p.jump();
+				if(e.isShiftDown() == false) {
+					manager.p.jump();
+				}
+				else {
+					manager.p.fall();
+				}
 			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_U) {
+				manager.p.y = 0;
+			}
+			
 		}
 	}
 

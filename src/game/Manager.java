@@ -8,6 +8,8 @@ public class Manager {
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
 	
+	static boolean Static = true;
+	
 	Manager(Player p) {
 		this.p = p;
 	}
@@ -31,6 +33,7 @@ public class Manager {
 		for(Platform platform : platforms) {
 			if(p.cBox.intersects(platform.cBox)) {
 				handlePCollision(platform);
+				
 				return true;
 			}
 		}
@@ -38,10 +41,18 @@ public class Manager {
 		p.setYLimit(PixelLegend.HEIGHT);
 		return false;
 	}
-	void handlePCollision(Platform p) {
-		
+	void handlePCollision(Platform P) {
+		if(p.yVelocity >= 0 && p.y + p.height < P.y + 20) {
+			if(Static == true) {
+				p.setYLimit(P.y);
+			}
+			Static = true;
+		}
+		else {
+			p.setYLimit(PixelLegend.HEIGHT);
+		}
 	}
-	void handleSCollision(SPlatform p) {
+	void handleSCollision(SPlatform P) {
 		
 	}
 }

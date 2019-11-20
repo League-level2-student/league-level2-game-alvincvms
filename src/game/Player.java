@@ -14,6 +14,8 @@ public class Player extends Object{
 	public int xLimitL = 0;
 	
 	int canJump = 0;
+	boolean canFall = true;
+	boolean isFalling = false;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -23,6 +25,19 @@ public class Player extends Object{
 		if (canJump > 0) {
 			yVelocity = -jumpPower;
 			canJump -= 1;
+		}
+	}
+	
+	public void fall() {
+		if(canFall == true) {
+			yVelocity += 15;
+			isFalling = true;
+			Manager.Static = false;
+			canFall = false;
+		}
+		
+		if(yVelocity > 25) {
+			yVelocity = 25;
 		}
 	}
 	
@@ -43,6 +58,8 @@ public class Player extends Object{
 			y = yLimit - height;
 			yVelocity = 0;
 			canJump = 2;
+			canFall = true;
+			isFalling = false;
 		}
 		if(x >= xLimitR - width) {
 			x = xLimitR - width;
