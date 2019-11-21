@@ -16,6 +16,7 @@ public class Player extends Object{
 	int canJump = 0;
 	boolean canFall = true;
 	boolean isFalling = false;
+	boolean escPlatform = false;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -31,8 +32,12 @@ public class Player extends Object{
 	public void fall() {
 		if(canFall == true) {
 			yVelocity += 15;
-			isFalling = true;
-			Manager.Static = false;
+			if(isFalling == false) {
+				escPlatform = true;
+			}
+			else {
+				escPlatform = false;
+			}
 			canFall = false;
 		}
 		
@@ -54,12 +59,19 @@ public class Player extends Object{
 		}
 		y += yVelocity;
 		
-		if(y >= yLimit - height){
+		if(y >= yLimit - height) {
 			y = yLimit - height;
 			yVelocity = 0;
 			canJump = 2;
 			canFall = true;
 			isFalling = false;
+		}
+		else {
+			isFalling = true;
+		}
+		
+		if(y >= PixelLegend.HEIGHT - height) {
+			escPlatform = false;
 		}
 		if(x >= xLimitR - width) {
 			x = xLimitR - width;

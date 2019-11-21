@@ -25,6 +25,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	int currentState = MAIN_MENU;
 	int currentRoom = R_start;
 	
+	int testCounter = 1;
+	
 	Timer timer;
 	
 	Game(){
@@ -33,6 +35,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	
 	void start() {
 		manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-100,70,10));
+		manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-200,70,10));
+		manager.platforms.add(new Platform(300,PixelLegend.HEIGHT-200,70,10));
+		manager.platforms.add(new Platform(500,PixelLegend.HEIGHT-200,70,10));
+		manager.sPlatforms.add(new SPlatform(200, PixelLegend.HEIGHT-100,70,10));
 		timer.start();
 	}
 	
@@ -51,6 +57,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		for(SPlatform p : manager.sPlatforms) {
 			p.update();
 		}
+		//System.out.println(manager.p.isFalling);
+		//System.out.println(manager.p.canFall);
+		//System.out.println(manager.p.escPlatform);
+
 	}
 	void updateEnd() {
 		
@@ -108,6 +118,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			updateEnd();
 		}
 		repaint();
+		
+		
+		testCounter --;
+		if(testCounter < 0) {
+			testCounter = 1;
+		}
 	}
 
 	@Override
@@ -134,6 +150,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			KPressed = true;
 		}
+		
 		if(currentState == IN_GAME) {
 			if(e.getKeyCode() == KeyEvent.VK_LEFT){
 				manager.p.left = true;
@@ -146,11 +163,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
 			
 			if(e.getKeyCode() == KeyEvent.VK_SPACE){
-				if(e.isShiftDown() == false) {
-					manager.p.jump();
+				if(e.isShiftDown() == true) {
+					manager.p.fall();
 				}
 				else {
-					manager.p.fall();
+					manager.p.jump();
 				}
 			}
 			
