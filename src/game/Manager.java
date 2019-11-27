@@ -37,6 +37,9 @@ public class Manager {
 		}
 		
 		p.setYLimit(PixelLegend.HEIGHT);
+		p.setYLimitU(-50);
+		p.setXLimitL(0);
+		p.setXLimitR(PixelLegend.WIDTH);
 		return false;
 	}
 	void handlePCollision(Platform P) {
@@ -53,6 +56,18 @@ public class Manager {
 		}
 	}
 	void handleSCollision(SPlatform P) {
+		if(p.y + p.height >= P.y && p.yVelocity > 0){
+			p.setYLimit(P.y + 1);
+		}
+		if(p.y < P.y + P.height && p.yVelocity < 0 && p.isFalling == true) {
+			p.setYLimitU(P.y + P.height);
+		}
 		
+		if(p.x < P.x + P.width && p.left == true) {
+			p.setXLimitL(P.x + P.width);
+		}
+		if(p.x + p.width > P.x && p.right == true) {
+			p.setXLimitR(P.x);
+		}
 	}
 }

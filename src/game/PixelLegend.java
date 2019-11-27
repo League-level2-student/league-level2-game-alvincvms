@@ -11,6 +11,8 @@ public class PixelLegend {
 	final static int WIDTH = 750;
 	final static int HEIGHT = 600;
 	
+	
+	
 	PixelLegend(){
 		window = new JFrame("Pixel Legends (Beta)");
 		game = new Game();

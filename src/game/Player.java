@@ -10,6 +10,7 @@ public class Player extends Object{
 	int jumpPower = 12;
 	
 	public int yLimit = PixelLegend.HEIGHT;
+	public int yLimitU = -50;
 	public int xLimitR = PixelLegend.WIDTH;
 	public int xLimitL = 0;
 	
@@ -54,6 +55,13 @@ public class Player extends Object{
 			x += xVelocity;
 		}
 		
+		if(x >= xLimitR - width) {
+			x = xLimitR - width;
+		}
+		if(x <= xLimitL) {
+			x = xLimitL;
+		}
+		
 		if(yVelocity < 20) {
 			yVelocity += gravity;
 		}
@@ -70,14 +78,20 @@ public class Player extends Object{
 			isFalling = true;
 		}
 		
+		if(y <= yLimitU) {
+			y = yLimitU;
+			yVelocity = 0;
+		}
+		
 		if(y >= PixelLegend.HEIGHT - height) {
 			escPlatform = false;
 		}
-		if(x >= xLimitR - width) {
-			x = xLimitR - width;
+		
+		if(left == true && right == false) {
+			facing = FACING_LEFT;
 		}
-		if(x <= xLimitL) {
-			x = xLimitL;
+		else if(right == true && left == false) {
+			facing = FACING_RIGHT;
 		}
 		
 		super.update();
@@ -90,6 +104,10 @@ public class Player extends Object{
 	
 	public void setYLimit(int limit) {
 		yLimit = limit;
+	}
+	
+	public void setYLimitU(int limit) {
+		yLimitU = limit;
 	}
 	
 	public void setXLimitL(int limit) {

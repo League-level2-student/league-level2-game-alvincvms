@@ -30,7 +30,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	Timer timer;
 	
 	Game(){
-		timer = new Timer(1000/60, this);
+		timer = new Timer(1000/55, this);
 	}
 	
 	void start() {
@@ -60,7 +60,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		//System.out.println(manager.p.isFalling);
 		//System.out.println(manager.p.canFall);
 		//System.out.println(manager.p.escPlatform);
-
+		//System.out.println(manager.p.facing);
 	}
 	void updateEnd() {
 		
@@ -154,11 +154,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		if(currentState == IN_GAME) {
 			if(e.getKeyCode() == KeyEvent.VK_LEFT){
 				manager.p.left = true;
-				manager.p.facing = Object.FACING_LEFT;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 				manager.p.right = true;
-				manager.p.facing = Object.FACING_RIGHT;
 			}
 
 			
@@ -173,6 +171,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			
 			if(e.getKeyCode() == KeyEvent.VK_U) {
 				manager.p.y = 0;
+				manager.p.yVelocity = 0;
 			}
 			
 		}
