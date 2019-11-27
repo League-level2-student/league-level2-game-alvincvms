@@ -63,6 +63,7 @@ public class Manager {
 			p.setYLimitU(P.y + P.height);
 		}
 		
+		//fix this:
 		if(p.x < P.x + P.width && p.left == true) {
 			p.setXLimitL(P.x + P.width);
 		}
