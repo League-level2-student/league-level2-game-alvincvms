@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Player extends Object{
 	
@@ -16,6 +17,7 @@ public class Player extends Object{
 	
 	int canJump = 0;
 	boolean canFall = true;
+	
 	boolean isFalling = false;
 	boolean escPlatform = false;
 	
@@ -48,18 +50,53 @@ public class Player extends Object{
 	}
 	
 	void update() {
+		newMove();
+	} 
+	
+	void newMove() {
+		int newX = x;
+		int newY = y;
+		
+		if(left) {
+			newX = x - xVelocity;
+		}
+		if(right) {
+			newX = x + xVelocity;
+		}
+		
+		Rectangle newCBox = new Rectangle(newX, newY, width, height);
+		
+		//System.out.println(Manager.checkCollision(newCBox) == false);
+		//System.out.println(x + "," + y);
+		//System.out.println(newX + "," + newY);
+		if(Manager.checkCollision(newCBox) == false) {
+			x = newX;
+			
+		}
+		
+		if(yVelocity < 20) {
+			yVelocity += gravity;
+		}
+		newY += yVelocity;
+		
+		newCBox = new Rectangle(newX, newY, width, height);
+		if(Manager.checkCollision(newCBox) == false) {
+			y = newY;
+		}
+		else {
+			canJump = 2;
+			yVelocity = 0;
+		}
+		
+		super.update();
+	}
+	
+	void moveCharacter() {
 		if(left){
 			x -= xVelocity;
 		}
 		if(right){
 			x += xVelocity;
-		}
-		
-		if(x >= xLimitR - width) {
-			x = xLimitR - width;
-		}
-		if(x <= xLimitL) {
-			x = xLimitL;
 		}
 		
 		if(yVelocity < 20) {
@@ -77,11 +114,18 @@ public class Player extends Object{
 		else {
 			isFalling = true;
 		}
-		
 		if(y <= yLimitU) {
 			y = yLimitU;
 			yVelocity = 0;
 		}
+		
+		if(x >= xLimitR - width) {
+			x = xLimitR - width;
+		}
+        if(x <= xLimitL) {
+			x = xLimitL;
+		}
+
 		
 		if(y >= PixelLegend.HEIGHT - height) {
 			escPlatform = false;

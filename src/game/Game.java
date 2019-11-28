@@ -19,7 +19,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	boolean KPressed = false;
 	
 	Object object;
-	Player player = new Player(0, 0, 17, 38);
+	Player player = new Player(50, 50, 17, 38);
 	Manager manager = new Manager(player);
 	
 	int currentState = MAIN_MENU;
@@ -39,6 +39,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		manager.platforms.add(new Platform(300,PixelLegend.HEIGHT-200,70,10));
 		manager.platforms.add(new Platform(500,PixelLegend.HEIGHT-200,70,10));
 		manager.sPlatforms.add(new SPlatform(200, PixelLegend.HEIGHT-100,70,10));
+		manager.sPlatforms.add(new SPlatform(400, PixelLegend.HEIGHT-20,70,10));
+		manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
+		manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+		manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+		manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
 		timer.start();
 	}
 	
@@ -49,8 +54,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void updateGame() {
-		manager.checkPlatformCollision();
-		manager.p.update();
+		//manager.checkPlatformCollision();
+		manager.update();
 		for(Platform p : manager.platforms) {
 			p.update();
 		}
@@ -61,6 +66,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		//System.out.println(manager.p.canFall);
 		//System.out.println(manager.p.escPlatform);
 		//System.out.println(manager.p.facing);
+		
 	}
 	void updateEnd() {
 		

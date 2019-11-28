@@ -1,12 +1,13 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Manager {
-	Player p;
-	ArrayList<Platform> platforms = new ArrayList<Platform>();
-	ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
+	static Player p;
+	static ArrayList<Platform> platforms = new ArrayList<Platform>();
+	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
 	
 	Manager(Player p) {
 		this.p = p;
@@ -18,6 +19,20 @@ public class Manager {
 	
 	void draw(Graphics g) {
 		p.draw(g);
+	}
+	
+	public static boolean checkCollision(Rectangle cBox) {
+		for(SPlatform sPlatform : sPlatforms) {
+			if(cBox.intersects(sPlatform.cBox)) {
+				return true;
+			}
+		}
+		for(Platform platform : platforms) {
+			if(cBox.intersects(platform.cBox)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	boolean checkPlatformCollision() {
@@ -63,12 +78,14 @@ public class Manager {
 			p.setYLimitU(P.y + P.height);
 		}
 		
-		//fix this:
-		if(p.x < P.x + P.width && p.left == true) {
+		
+		if(p.x <= P.x + P.width && p.left == true) {
 			p.setXLimitL(P.x + P.width);
+
 		}
-		if(p.x + p.width > P.x && p.right == true) {
+		if(p.x + p.width >= P.x && p.right == true) {
 			p.setXLimitR(P.x);
+
 		}
 	}
 }
