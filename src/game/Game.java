@@ -34,16 +34,16 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void start() {
-		manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-100,70,10));
-		manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-200,70,10));
-		manager.platforms.add(new Platform(300,PixelLegend.HEIGHT-200,70,10));
-		manager.platforms.add(new Platform(500,PixelLegend.HEIGHT-200,70,10));
-		manager.sPlatforms.add(new SPlatform(200, PixelLegend.HEIGHT-100,70,10));
-		manager.sPlatforms.add(new SPlatform(400, PixelLegend.HEIGHT-20,70,10));
-		manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
-		manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
-		manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
-		manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+		Manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-100,70,10));
+		Manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-200,70,10));
+		Manager.platforms.add(new Platform(300,PixelLegend.HEIGHT-200,70,10));
+		Manager.platforms.add(new Platform(500,PixelLegend.HEIGHT-200,70,10));
+		Manager.sPlatforms.add(new SPlatform(200, PixelLegend.HEIGHT-100,70,10));
+		Manager.sPlatforms.add(new SPlatform(400, PixelLegend.HEIGHT-20,70,10));
+		Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
+		Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+		Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+		Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
 		timer.start();
 	}
 	
@@ -56,16 +56,18 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	void updateGame() {
 		//manager.checkPlatformCollision();
 		manager.update();
-		for(Platform p : manager.platforms) {
+		for(Platform p : Manager.platforms) {
 			p.update();
 		}
-		for(SPlatform p : manager.sPlatforms) {
+		for(SPlatform p : Manager.sPlatforms) {
 			p.update();
 		}
-		//System.out.println(manager.p.isFalling);
+		//System.out.println(Manager.p.isFalling);
 		//System.out.println(manager.p.canFall);
 		//System.out.println(manager.p.escPlatform);
 		//System.out.println(manager.p.facing);
+		//System.out.println(Manager.checkPlatformCollision());
+		//System.out.println(Manager.p.yVelocity);
 		
 	}
 	void updateEnd() {
@@ -79,11 +81,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void drawGame(Graphics g) {
-		manager.p.draw(g);
-		for(Platform p : manager.platforms) {
+		Manager.p.draw(g);
+		for(Platform p : Manager.platforms) {
 			p.draw(g);
 		}
-		for(SPlatform p : manager.sPlatforms) {
+		for(SPlatform p : Manager.sPlatforms) {
 			p.draw(g);
 		}
 	}
@@ -159,25 +161,25 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 		if(currentState == IN_GAME) {
 			if(e.getKeyCode() == KeyEvent.VK_LEFT){
-				manager.p.left = true;
+				Manager.p.left = true;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-				manager.p.right = true;
+				Manager.p.right = true;
 			}
 
 			
 			if(e.getKeyCode() == KeyEvent.VK_SPACE){
 				if(e.isShiftDown() == true) {
-					manager.p.fall();
+					Manager.p.fall();
 				}
 				else {
-					manager.p.jump();
+					Manager.p.jump();
 				}
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_U) {
-				manager.p.y = 0;
-				manager.p.yVelocity = 0;
+				Manager.p.y = 0;
+				Manager.p.yVelocity = 0;
 			}
 			
 		}
@@ -188,10 +190,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		if(currentState == IN_GAME) {
 			if(e.getKeyCode() == KeyEvent.VK_LEFT){
-				manager.p.left = false;
+				Manager.p.left = false;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-				manager.p.right = false;
+				Manager.p.right = false;
 			}
 		}
 		KPressed = false;

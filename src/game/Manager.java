@@ -10,7 +10,7 @@ public class Manager {
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
 	
 	Manager(Player p) {
-		this.p = p;
+		Manager.p = p;
 	}
 	
 	void update() {
@@ -21,56 +21,31 @@ public class Manager {
 		p.draw(g);
 	}
 	
-	public static boolean checkCollision(Rectangle cBox) {
+	public static boolean checkSolidCollision(Rectangle cBox) {
 		for(SPlatform sPlatform : sPlatforms) {
 			if(cBox.intersects(sPlatform.cBox)) {
-				return true;
-			}
-		}
-		for(Platform platform : platforms) {
-			if(cBox.intersects(platform.cBox)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	boolean checkPlatformCollision() {
-		
-		for(SPlatform sPlatform : sPlatforms) {
-			if(p.cBox.intersects(sPlatform.cBox)) {
-				handleSCollision(sPlatform);
-				return true;
-			}
-		}
+	public static boolean checkPlatformCollision() {
 		for(Platform platform : platforms) {
 			if(p.cBox.intersects(platform.cBox)) {
 				handlePCollision(platform);
-				
 				return true;
 			}
 		}
-		
-		p.setYLimit(PixelLegend.HEIGHT);
-		p.setYLimitU(-50);
-		p.setXLimitL(0);
-		p.setXLimitR(PixelLegend.WIDTH);
 		return false;
 	}
-	void handlePCollision(Platform P) {
-		if(p.yVelocity >= 0 && p.y + p.height < P.y + 20) {	
-			p.setYLimit(P.y + 1);
-			if(p.escPlatform == true) {
-				p.setYLimit(PixelLegend.HEIGHT);
-				p.y += 3;
-				p.escPlatform = false;
-			}
-		}
-		else {
-			p.setYLimit(PixelLegend.HEIGHT);
+	public static void handlePCollision(Platform P) {
+		if(p.yVelocity >= 0 && p.y + p.height < P.y + 20) {
+			p.y = P.y - p.height + 1;
+			p.isFalling = false;
 		}
 	}
-	void handleSCollision(SPlatform P) {
+	/*void handleSCollision(SPlatform P) {
 		if(p.y + p.height >= P.y && p.yVelocity > 0){
 			p.setYLimit(P.y + 1);
 		}
@@ -87,5 +62,5 @@ public class Manager {
 			p.setXLimitR(P.x);
 
 		}
-	}
+	}*/
 }

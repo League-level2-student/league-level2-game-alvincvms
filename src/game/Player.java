@@ -8,7 +8,7 @@ public class Player extends Object{
 	
 	int xVelocity = 6;
 	int yVelocity = 0;
-	int jumpPower = 12;
+	int jumpPower = 11;
 	
 	public int yLimit = PixelLegend.HEIGHT;
 	public int yLimitU = -50;
@@ -57,21 +57,41 @@ public class Player extends Object{
 		int newX = x;
 		int newY = y;
 		
-		if(left) {
+		isFalling = true;
+		
+		if(left && !right) {
 			newX = x - xVelocity;
+			facing = FACING_LEFT;
 		}
-		if(right) {
+		if(right && !left) {
 			newX = x + xVelocity;
+			facing = FACING_RIGHT;
 		}
 		
-		Rectangle newCBox = new Rectangle(newX, newY, width, height);
+		Rectangle newCBox = new Rectangle(newX, y, width, height);
 		
 		//System.out.println(Manager.checkCollision(newCBox) == false);
 		//System.out.println(x + "," + y);
 		//System.out.println(newX + "," + newY);
-		if(Manager.checkCollision(newCBox) == false) {
-			x = newX;
+		if(Manager.checkSolidCollision(newCBox) == false) {
+			x = newX;	
+		}
+		else {
+			if(left && !right) {
+				while(Manager.checkSolidCollision(newCBox) == true) {
+					newX += 1;
+					newCBox = new Rectangle(newX, y, width, height);
+				}
+				x = newX;
+			}
 			
+			if(right && !left) {
+				while(Manager.checkSolidCollision(newCBox) == true) {
+					newX -= 1;
+					newCBox = new Rectangle(newX, y, width, height);
+				}
+				x = newX;
+			}
 		}
 		
 		if(yVelocity < 20) {
@@ -79,11 +99,30 @@ public class Player extends Object{
 		}
 		newY += yVelocity;
 		
-		newCBox = new Rectangle(newX, newY, width, height);
-		if(Manager.checkCollision(newCBox) == false) {
+		newCBox = new Rectangle(x, newY, width, height);
+		if(Manager.checkSolidCollision(newCBox) == false) {
+			y = newY;
+		}
+		else if(yVelocity < 0) {
+			while(Manager.checkSolidCollision(newCBox) == true) {
+				newY += 1;
+				newCBox = new Rectangle(x, newY, width, height);
+			}
+			yVelocity = 0;
 			y = newY;
 		}
 		else {
+			while(Manager.checkSolidCollision(newCBox) == true) {
+				newY -= 1;
+				newCBox = new Rectangle(x, newY, width, height);
+			}
+			y = newY;
+			isFalling = false;
+		}
+		
+		Manager.checkPlatformCollision();
+		
+		if(isFalling == false) {
 			canJump = 2;
 			yVelocity = 0;
 		}
@@ -91,7 +130,7 @@ public class Player extends Object{
 		super.update();
 	}
 	
-	void moveCharacter() {
+	/*void oldMove() {
 		if(left){
 			x -= xVelocity;
 		}
@@ -139,7 +178,7 @@ public class Player extends Object{
 		}
 		
 		super.update();
-	}
+	}*/
 	
 	void draw(Graphics g) {
 		g.setColor(Color.blue);
