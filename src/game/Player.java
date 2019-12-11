@@ -20,6 +20,7 @@ public class Player extends Object{
 	
 	boolean isFalling = false;
 	boolean escPlatform = false;
+	boolean platformCollision = false;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -100,13 +101,17 @@ public class Player extends Object{
 		newY += yVelocity;
 		
 		newCBox = new Rectangle(x, newY, width, height);
-		if(Manager.checkSolidCollision(newCBox) == false) {
-			y = newY;
+
+		if(Manager.checkPlatformCollision(newCBox) && yVelocity >= 0 && y + height < Manager.collidingPlatform.y + 20) {
+			Manager.handlePCollision(Manager.collidingPlatform);
+		}
+		else if(Manager.checkSolidCollision(newCBox) == false) {
+				y = newY;
 		}
 		else if(yVelocity < 0) {
 			while(Manager.checkSolidCollision(newCBox) == true) {
-				newY += 1;
-				newCBox = new Rectangle(x, newY, width, height);
+					newY += 1;
+					newCBox = new Rectangle(x, newY, width, height);
 			}
 			yVelocity = 0;
 			y = newY;
@@ -117,15 +122,14 @@ public class Player extends Object{
 				newCBox = new Rectangle(x, newY, width, height);
 			}
 			y = newY;
-			isFalling = false;
-		}
-		
-		Manager.checkPlatformCollision();
-		
-		if(isFalling == false) {
 			canJump = 2;
 			yVelocity = 0;
+			canFall = true;
+			isFalling = false;
 		}
+
+		
+
 		
 		super.update();
 	}

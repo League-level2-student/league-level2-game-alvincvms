@@ -8,6 +8,7 @@ public class Manager {
 	static Player p;
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
+	static Platform collidingPlatform;
 	
 	Manager(Player p) {
 		Manager.p = p;
@@ -30,19 +31,27 @@ public class Manager {
 		return false;
 	}
 	
-	public static boolean checkPlatformCollision() {
+	public static boolean checkPlatformCollision(Rectangle cBox) {
 		for(Platform platform : platforms) {
-			if(p.cBox.intersects(platform.cBox)) {
-				handlePCollision(platform);
+			if(cBox.intersects(platform.cBox)) {
+				collidingPlatform = platform;
 				return true;
 			}
 		}
+		p.platformCollision = false;
 		return false;
 	}
 	public static void handlePCollision(Platform P) {
 		if(p.yVelocity >= 0 && p.y + p.height < P.y + 20) {
+			p.platformCollision = true;
 			p.y = P.y - p.height + 1;
+			p.canJump = 2;
+			p.yVelocity = 0;
+			p.canFall = true;
 			p.isFalling = false;
+		}
+		else {
+			p.platformCollision = false;
 		}
 	}
 	/*void handleSCollision(SPlatform P) {

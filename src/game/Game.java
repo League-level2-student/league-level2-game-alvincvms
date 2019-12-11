@@ -19,7 +19,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	boolean KPressed = false;
 	
 	Object object;
-	Player player = new Player(50, 50, 17, 38);
+	Player player = new Player(100, 100, 17, 38);
 	Manager manager = new Manager(player);
 	
 	int currentState = MAIN_MENU;
@@ -30,7 +30,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	Timer timer;
 	
 	Game(){
-		timer = new Timer(1000/55, this);
+		timer = new Timer(1000/60, this);
 	}
 	
 	void start() {
@@ -67,7 +67,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		//System.out.println(manager.p.escPlatform);
 		//System.out.println(manager.p.facing);
 		//System.out.println(Manager.checkPlatformCollision());
-		//System.out.println(Manager.p.yVelocity);
+		System.out.println(Manager.p.yVelocity);
+		//System.out.println(Manager.p.x + "," + Manager.p.y);
 		
 	}
 	void updateEnd() {
