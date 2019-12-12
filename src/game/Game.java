@@ -25,12 +25,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	int currentState = MAIN_MENU;
 	int currentRoom = R_start;
 	
-	int testCounter = 1;
+	public static int attackCooldown = 0;
 	
 	Timer timer;
 	
 	Game(){
-		timer = new Timer(1000/60, this);
+		timer = new Timer(1000/55, this);
 	}
 	
 	void start() {
@@ -55,21 +55,18 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	void updateGame() {
 		//manager.checkPlatformCollision();
-		manager.update();
-		for(Platform p : Manager.platforms) {
-			p.update();
-		}
-		for(SPlatform p : Manager.sPlatforms) {
-			p.update();
+		Manager.update();
+		
+		if(attackCooldown > 0) {
+			attackCooldown--;
 		}
 		//System.out.println(Manager.p.isFalling);
 		//System.out.println(manager.p.canFall);
 		//System.out.println(manager.p.escPlatform);
 		//System.out.println(manager.p.facing);
 		//System.out.println(Manager.checkPlatformCollision());
-		System.out.println(Manager.p.yVelocity);
+		//System.out.println(Manager.p.yVelocity);
 		//System.out.println(Manager.p.x + "," + Manager.p.y);
-		
 	}
 	void updateEnd() {
 		
@@ -82,13 +79,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void drawGame(Graphics g) {
-		Manager.p.draw(g);
-		for(Platform p : Manager.platforms) {
-			p.draw(g);
-		}
-		for(SPlatform p : Manager.sPlatforms) {
-			p.draw(g);
-		}
+		Manager.draw(g);
 	}
 	void drawEnd(Graphics g) {
 		
@@ -128,11 +119,6 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		}
 		repaint();
 		
-		
-		testCounter --;
-		if(testCounter < 0) {
-			testCounter = 1;
-		}
 	}
 
 	@Override
@@ -178,8 +164,13 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				}
 			}
 			
+			if(e.getKeyCode() == KeyEvent.VK_F && attackCooldown == 0) {
+				Manager.p.attack();
+				attackCooldown = Manager.p.attackCooldown;
+			}
+			
 			if(e.getKeyCode() == KeyEvent.VK_U) {
-				Manager.p.y = 0;
+				Manager.p.y = 20;
 				Manager.p.yVelocity = 0;
 			}
 			

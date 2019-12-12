@@ -10,13 +10,16 @@ public class Player extends Object{
 	int yVelocity = 0;
 	int jumpPower = 11;
 	
-	public int yLimit = PixelLegend.HEIGHT;
-	public int yLimitU = -50;
-	public int xLimitR = PixelLegend.WIDTH;
-	public int xLimitL = 0;
+	//public int yLimit = PixelLegend.HEIGHT;
+	//public int yLimitU = -50;
+	//public int xLimitR = PixelLegend.WIDTH;
+	//public int xLimitL = 0;
+	
+	public int attackCooldown = 10;
 	
 	int canJump = 0;
 	boolean canFall = true;
+	boolean doubleJump = false;
 	
 	boolean isFalling = false;
 	boolean escPlatform = false;
@@ -47,6 +50,15 @@ public class Player extends Object{
 		
 		if(yVelocity > 25) {
 			yVelocity = 25;
+		}
+	}
+	
+	public void attack() {
+		if(facing == FACING_LEFT) {
+			Manager.playerAttacks.add(new PlayerAttack(x - 16, y + 3, 16, 31, FACING_LEFT));
+		}
+		if(facing == FACING_RIGHT) {
+			Manager.playerAttacks.add(new PlayerAttack(x + width, y + 3, 16, 31, FACING_RIGHT));
 		}
 	}
 	
@@ -102,7 +114,7 @@ public class Player extends Object{
 		
 		newCBox = new Rectangle(x, newY, width, height);
 
-		if(Manager.checkPlatformCollision(newCBox) && yVelocity >= 0 && y + height < Manager.collidingPlatform.y + 20) {
+		if(Manager.checkPlatformCollision(newCBox) && yVelocity >= 0 && y + height < Manager.collidingPlatform.y + 10) {
 			Manager.handlePCollision(Manager.collidingPlatform);
 		}
 		else if(Manager.checkSolidCollision(newCBox) == false) {
@@ -122,10 +134,16 @@ public class Player extends Object{
 				newCBox = new Rectangle(x, newY, width, height);
 			}
 			y = newY;
-			canJump = 2;
+			canJump = 1;
 			yVelocity = 0;
 			canFall = true;
 			isFalling = false;
+			doubleJump = true;
+		}
+		
+		if(isFalling && doubleJump) {
+			canJump = 1;
+			doubleJump = false;
 		}
 
 		
@@ -189,7 +207,7 @@ public class Player extends Object{
 		g.fillRect(x, y, width, height);
 	}
 	
-	public void setYLimit(int limit) {
+	/*public void setYLimit(int limit) {
 		yLimit = limit;
 	}
 	
@@ -202,5 +220,5 @@ public class Player extends Object{
 	}
 	public void setXLimitR(int limit) {
 		xLimitR = limit;
-	}
+	}*/
 }

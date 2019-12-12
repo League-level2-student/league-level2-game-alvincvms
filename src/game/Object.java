@@ -30,9 +30,6 @@ public class Object {
 	}
 	
 	void update() {
-		if(health <= 0) {
-			isAlive = false;
-		}
 		cBox.setBounds(x, y, width, height);
 	}
 	

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Manager {
 	static Player p;
+	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
+	
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
 	static Platform collidingPlatform;
@@ -14,12 +16,31 @@ public class Manager {
 		Manager.p = p;
 	}
 	
-	void update() {
+	static void update() {
 		p.update();
+		for(Platform p : Manager.platforms) {
+			p.update();
+		}
+		for(SPlatform p : Manager.sPlatforms) {
+			p.update();
+		}
+		for(PlayerAttack attack : playerAttacks) {
+			attack.update();
+		}
+		purgeObjects();
 	}
 	
-	void draw(Graphics g) {
+	static void draw(Graphics g) {
 		p.draw(g);
+		for(Platform p : Manager.platforms) {
+			p.draw(g);
+		}
+		for(SPlatform p : Manager.sPlatforms) {
+			p.draw(g);
+		}
+		for(PlayerAttack attack : playerAttacks) {
+			attack.draw(g);
+		}
 	}
 	
 	public static boolean checkSolidCollision(Rectangle cBox) {
@@ -38,22 +59,34 @@ public class Manager {
 				return true;
 			}
 		}
-		p.platformCollision = false;
 		return false;
 	}
 	public static void handlePCollision(Platform P) {
-		if(p.yVelocity >= 0 && p.y + p.height < P.y + 20) {
-			p.platformCollision = true;
+		if(p.yVelocity >= 0) {
 			p.y = P.y - p.height + 1;
-			p.canJump = 2;
+			p.canJump = 1;
+			p.doubleJump = true;
 			p.yVelocity = 0;
 			p.canFall = true;
 			p.isFalling = false;
-		}
-		else {
-			p.platformCollision = false;
+			if(p.escPlatform) {
+				while(p.y + p.height < P.y + 10) {
+					p.y += 1;
+				}
+				p.yVelocity += 15;
+				p.escPlatform = false;
+			}
 		}
 	}
+	
+	public static void purgeObjects() {
+		for(int i = 0; i < playerAttacks.size(); i++) {
+			if(!playerAttacks.get(i).isAlive) {
+				playerAttacks.remove(i);
+			}
+		}
+	}
+	
 	/*void handleSCollision(SPlatform P) {
 		if(p.y + p.height >= P.y && p.yVelocity > 0){
 			p.setYLimit(P.y + 1);

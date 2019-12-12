@@ -10,7 +10,7 @@ public class Platform extends Object{
 	}
 	
 	void update() {
-		cBox.setBounds(x, y, width, height);
+		super.update();
 	}
 	
 	void draw(Graphics g) {
