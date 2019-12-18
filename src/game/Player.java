@@ -9,13 +9,17 @@ public class Player extends Object{
 	int xVelocity = 6;
 	int yVelocity = 0;
 	int jumpPower = 11;
+	public static int playerX;
+	public static int playerY;
+	public static int playerWidth;
+	public static int playerHeight;
 	
 	//public int yLimit = PixelLegend.HEIGHT;
 	//public int yLimitU = -50;
 	//public int xLimitR = PixelLegend.WIDTH;
 	//public int xLimitL = 0;
 	
-	public int attackCooldown = 10;
+	public int attackCooldown = 14;
 	
 	int canJump = 0;
 	boolean canFall = true;
@@ -27,6 +31,9 @@ public class Player extends Object{
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
+		facing = FACING_RIGHT;
+		playerWidth = width;
+		playerHeight = height;
 	}
 	
 	public void jump() {
@@ -55,10 +62,25 @@ public class Player extends Object{
 	
 	public void attack() {
 		if(facing == FACING_LEFT) {
-			Manager.playerAttacks.add(new PlayerAttack(x - 16, y + 3, 16, 31, FACING_LEFT));
+			PlayerAttack attack = new PlayerAttack(x - 16, y + 3, 16, 31, FACING_LEFT);
+			Manager.playerAttacks.add(attack);
+			attack.attack();
 		}
 		if(facing == FACING_RIGHT) {
-			Manager.playerAttacks.add(new PlayerAttack(x + width, y + 3, 16, 31, FACING_RIGHT));
+			PlayerAttack attack = new PlayerAttack(x + width, y + 3, 16, 31, FACING_RIGHT);
+			Manager.playerAttacks.add(attack);
+			attack.attack();
+		}
+	}
+	
+	public void shoot() {
+		if(facing == FACING_LEFT) {
+			PlayerProjectile p = new PlayerProjectile(x - 21, y + 10, 21, 8, FACING_LEFT);
+			Manager.playerProjectiles.add(p);
+		}
+		if(facing == FACING_RIGHT) {
+			PlayerProjectile p = new PlayerProjectile(x + width, y + 10, 21, 8, FACING_RIGHT);
+			Manager.playerProjectiles.add(p);
 		}
 	}
 	
@@ -146,8 +168,8 @@ public class Player extends Object{
 			doubleJump = false;
 		}
 
-		
-
+		playerX = x;
+		playerY = y;
 		
 		super.update();
 	}

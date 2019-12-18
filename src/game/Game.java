@@ -67,6 +67,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		//System.out.println(Manager.checkPlatformCollision());
 		//System.out.println(Manager.p.yVelocity);
 		//System.out.println(Manager.p.x + "," + Manager.p.y);
+		//System.out.println(attackCooldown);
 	}
 	void updateEnd() {
 		
@@ -168,10 +169,17 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				Manager.p.attack();
 				attackCooldown = Manager.p.attackCooldown;
 			}
+			if(e.getKeyCode() == KeyEvent.VK_G && attackCooldown == 0) {
+				Manager.p.shoot();
+				attackCooldown = Manager.p.attackCooldown;
+			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_U) {
 				Manager.p.y = 20;
 				Manager.p.yVelocity = 0;
+				for(int i = 0; i < Manager.playerAttacks.size(); i++) {
+					Manager.playerAttacks.get(i).isAlive = false;
+				}
 			}
 			
 		}

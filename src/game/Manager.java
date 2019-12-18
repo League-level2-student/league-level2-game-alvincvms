@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Manager {
 	static Player p;
 	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
+	static ArrayList<PlayerProjectile> playerProjectiles = new ArrayList<PlayerProjectile>();
 	
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
@@ -27,6 +28,10 @@ public class Manager {
 		for(PlayerAttack attack : playerAttacks) {
 			attack.update();
 		}
+		for(PlayerProjectile projectile : playerProjectiles) {
+			projectile.update();
+		}
+		
 		purgeObjects();
 	}
 	
@@ -40,6 +45,9 @@ public class Manager {
 		}
 		for(PlayerAttack attack : playerAttacks) {
 			attack.draw(g);
+		}
+		for(PlayerProjectile projectile : playerProjectiles) {
+			projectile.draw(g);
 		}
 	}
 	
@@ -83,6 +91,11 @@ public class Manager {
 		for(int i = 0; i < playerAttacks.size(); i++) {
 			if(!playerAttacks.get(i).isAlive) {
 				playerAttacks.remove(i);
+			}
+		}
+		for(int i = 0; i < playerProjectiles.size(); i++) {
+			if(!playerProjectiles.get(i).isAlive) {
+				playerProjectiles.remove(i);
 			}
 		}
 	}
