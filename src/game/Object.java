@@ -17,7 +17,7 @@ public class Object {
 	public int facing;
 	public final static int FACING_LEFT = 0;
 	public final static int FACING_RIGHT = 1;
-	static int gravity = 1;
+	int gravity = 1;
 	
 	Rectangle cBox = new Rectangle();
 	

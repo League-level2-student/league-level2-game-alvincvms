@@ -34,7 +34,7 @@ public class PlayerAttack extends Object{
 			y = Player.playerY + 3;
 		}
 		if(facing == FACING_RIGHT) {
-			x = Player.playerX + Player.playerWidth;
+			x = Player.playerX + Player.playerWidth - 14;
 			y = Player.playerY + 3;
 		} 
 		

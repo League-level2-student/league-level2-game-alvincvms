@@ -9,6 +9,9 @@ public class Player extends Object{
 	int xVelocity = 6;
 	int yVelocity = 0;
 	int jumpPower = 11;
+	int kXV;
+	int kYV;
+	int kDir;
 	public static int playerX;
 	public static int playerY;
 	public static int playerWidth;
@@ -45,7 +48,7 @@ public class Player extends Object{
 	
 	public void fall() {
 		if(canFall == true) {
-			yVelocity += 15;
+			yVelocity = 25;
 			if(isFalling == false) {
 				escPlatform = true;
 			}
@@ -54,20 +57,27 @@ public class Player extends Object{
 			}
 			canFall = false;
 		}
-		
-		if(yVelocity > 25) {
-			yVelocity = 25;
+	}
+	
+	public void knockback(int force, int dir) {
+		kYV = -force/2;
+		kDir = dir;
+		if(dir == FACING_LEFT) {
+			kXV = -force;
+		}
+		if(dir == FACING_RIGHT) {
+			kXV = force;
 		}
 	}
 	
 	public void attack() {
 		if(facing == FACING_LEFT) {
-			PlayerAttack attack = new PlayerAttack(x - 16, y + 3, 16, 31, FACING_LEFT);
+			PlayerAttack attack = new PlayerAttack(x - 16, y + 3, 30, 31, FACING_LEFT);
 			Manager.playerAttacks.add(attack);
 			attack.attack();
 		}
 		if(facing == FACING_RIGHT) {
-			PlayerAttack attack = new PlayerAttack(x + width, y + 3, 16, 31, FACING_RIGHT);
+			PlayerAttack attack = new PlayerAttack(x + width - 14, y + 3, 30, 31, FACING_RIGHT);
 			Manager.playerAttacks.add(attack);
 			attack.attack();
 		}
@@ -75,11 +85,11 @@ public class Player extends Object{
 	
 	public void shoot() {
 		if(facing == FACING_LEFT) {
-			PlayerProjectile p = new PlayerProjectile(x - 21, y + 10, 21, 8, FACING_LEFT);
+			PlayerProjectile p = new PlayerProjectile(x, y + 10, 21, 8, FACING_LEFT);
 			Manager.playerProjectiles.add(p);
 		}
 		if(facing == FACING_RIGHT) {
-			PlayerProjectile p = new PlayerProjectile(x + width, y + 10, 21, 8, FACING_RIGHT);
+			PlayerProjectile p = new PlayerProjectile(x, y + 10, 21, 8, FACING_RIGHT);
 			Manager.playerProjectiles.add(p);
 		}
 	}
@@ -103,6 +113,23 @@ public class Player extends Object{
 			facing = FACING_RIGHT;
 		}
 		
+		newX += kXV;
+		if(kXV < 0) {
+			kXV += 1;
+			if(kXV > 0) {
+				kXV = 0;
+				kDir = 3;
+			}
+		}
+		if(kXV > 0) {
+			kXV -= 1;
+			if(kXV < 0) {
+				kXV = 0;
+				kDir = 3;
+			}
+		}
+		
+		
 		Rectangle newCBox = new Rectangle(newX, y, width, height);
 		
 		//System.out.println(Manager.checkCollision(newCBox) == false);
@@ -112,7 +139,7 @@ public class Player extends Object{
 			x = newX;	
 		}
 		else {
-			if(left && !right) {
+			if(left && !right && !(kXV > 0) || kXV < 0) {
 				while(Manager.checkSolidCollision(newCBox) == true) {
 					newX += 1;
 					newCBox = new Rectangle(newX, y, width, height);
@@ -120,7 +147,7 @@ public class Player extends Object{
 				x = newX;
 			}
 			
-			if(right && !left) {
+			if(right && !left && !(kXV < 0) || kXV > 0) {
 				while(Manager.checkSolidCollision(newCBox) == true) {
 					newX -= 1;
 					newCBox = new Rectangle(newX, y, width, height);
@@ -132,6 +159,14 @@ public class Player extends Object{
 		if(yVelocity < 20) {
 			yVelocity += gravity;
 		}
+		if(kYV < 0) {
+			yVelocity = kYV;
+		}
+		kYV += 1;
+		if(kYV > 0) {
+			kYV = 0;
+		}
+		
 		newY += yVelocity;
 		
 		newCBox = new Rectangle(x, newY, width, height);
