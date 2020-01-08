@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class PlayerProjectile extends Object{
+	
+	int dmg;
 	int xVelocity = 8;
 	boolean spawned = false;
 	
-	PlayerProjectile(int x, int y, int width, int height, int direction){
+	PlayerProjectile(int x, int y, int width, int height, int direction, int dmg){
 		super(x, y, width, height);
 		facing = direction;
+		this.dmg = dmg;
 	}
 	
 	void update() {

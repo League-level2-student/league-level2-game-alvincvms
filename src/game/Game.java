@@ -181,7 +181,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				/*for(int i = 0; i < Manager.playerAttacks.size(); i++) {
 					Manager.playerAttacks.get(i).isAlive = false;
 				}*/
-				Manager.p.knockback(15, Object.FACING_RIGHT);
+				//Manager.p.knockback(15, Object.FACING_RIGHT);
+				Manager.warriors.add(new Warrior(Manager.p.x, Manager.p.y, 17, 38));
+			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_K) {
+				System.out.println(Manager.warriors.get(0).x +","+ Manager.warriors.get(0).y);
 			}
 			
 		}

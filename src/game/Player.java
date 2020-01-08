@@ -12,6 +12,8 @@ public class Player extends Object{
 	int kXV;
 	int kYV;
 	int kDir;
+	int mDmg = 17;
+	int rDmg = 8;
 	public static int playerX;
 	public static int playerY;
 	public static int playerWidth;
@@ -72,12 +74,12 @@ public class Player extends Object{
 	
 	public void attack() {
 		if(facing == FACING_LEFT) {
-			PlayerAttack attack = new PlayerAttack(x - 16, y + 3, 30, 31, FACING_LEFT);
+			PlayerAttack attack = new PlayerAttack(x - 16, y + 3, 30, 31, FACING_LEFT, mDmg);
 			Manager.playerAttacks.add(attack);
 			attack.attack();
 		}
 		if(facing == FACING_RIGHT) {
-			PlayerAttack attack = new PlayerAttack(x + width - 14, y + 3, 30, 31, FACING_RIGHT);
+			PlayerAttack attack = new PlayerAttack(x + width - 14, y + 3, 30, 31, FACING_RIGHT, mDmg);
 			Manager.playerAttacks.add(attack);
 			attack.attack();
 		}
@@ -85,11 +87,11 @@ public class Player extends Object{
 	
 	public void shoot() {
 		if(facing == FACING_LEFT) {
-			PlayerProjectile p = new PlayerProjectile(x, y + 10, 21, 8, FACING_LEFT);
+			PlayerProjectile p = new PlayerProjectile(x, y + 10, 21, 8, FACING_LEFT, rDmg);
 			Manager.playerProjectiles.add(p);
 		}
 		if(facing == FACING_RIGHT) {
-			PlayerProjectile p = new PlayerProjectile(x, y + 10, 21, 8, FACING_RIGHT);
+			PlayerProjectile p = new PlayerProjectile(x, y + 10, 21, 8, FACING_RIGHT, rDmg);
 			Manager.playerProjectiles.add(p);
 		}
 	}

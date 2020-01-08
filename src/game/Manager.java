@@ -8,6 +8,7 @@ public class Manager {
 	static Player p;
 	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
 	static ArrayList<PlayerProjectile> playerProjectiles = new ArrayList<PlayerProjectile>();
+	static ArrayList<Warrior> warriors = new ArrayList<Warrior>();
 	
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
@@ -31,6 +32,9 @@ public class Manager {
 		for(PlayerProjectile projectile : playerProjectiles) {
 			projectile.update();
 		}
+		for(Warrior w : warriors) {
+			w.update();
+		}
 		
 		purgeObjects();
 	}
@@ -48,6 +52,9 @@ public class Manager {
 		}
 		for(PlayerProjectile projectile : playerProjectiles) {
 			projectile.draw(g);
+		}
+		for(Warrior w : warriors) {
+			w.draw(g);
 		}
 	}
 	

@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 public class PlayerAttack extends Object{
 
+	int dmg;
 	Timer timer;
 	TimerTask task = new FinishAttack();
 	
@@ -17,10 +18,11 @@ public class PlayerAttack extends Object{
 		}
 	}
 	
-	public PlayerAttack(int x, int y, int width, int height, int direction) {
+	public PlayerAttack(int x, int y, int width, int height, int direction, int dmg) {
 		super(x, y, width, height);
 		facing = direction;
 		timer = new Timer();
+		this.dmg = dmg;
 	}
 	
 	void update() {
