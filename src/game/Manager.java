@@ -19,6 +19,7 @@ public class Manager {
 	}
 	
 	static void update() {
+		purgeObjects();
 		p.update();
 		for(Platform p : Manager.platforms) {
 			p.update();
@@ -36,7 +37,35 @@ public class Manager {
 			w.update();
 		}
 		
-		purgeObjects();
+		if(playerAttacks.size() > 0) {
+			for(int i = 0; i < playerAttacks.size(); i++) {
+				if(warriors.size() > 0) {
+					for(int n = 0; n < warriors.size(); n++) {
+						if(playerAttacks.get(i).cBox.intersects(warriors.get(n).cBox)) {
+							playerAttacks.get(i).isAlive = false;
+							warriors.get(n).knockback(16, playerAttacks.get(i).facing);
+							warriors.get(n).health -= playerAttacks.get(i).dmg;
+						}
+					}
+				}
+				
+			}
+		}
+		if(playerProjectiles.size() > 0) {
+			for(int i = 0; i < playerProjectiles.size(); i++) {
+				if(warriors.size() > 0) {
+					for(int n = 0; n < warriors.size(); n++) {
+						if(playerProjectiles.get(i).cBox.intersects(warriors.get(n).cBox)) {
+							playerProjectiles.get(i).isAlive = false;
+							warriors.get(n).knockback(9, playerProjectiles.get(i).facing);
+							warriors.get(n).health -= playerProjectiles.get(i).dmg;
+						}
+					}
+				}
+				
+			}
+		}
+
 	}
 	
 	static void draw(Graphics g) {

@@ -18,6 +18,8 @@ public class Player extends Object{
 	public static int playerY;
 	public static int playerWidth;
 	public static int playerHeight;
+	public boolean left = false;
+	public boolean right = false;
 	
 	//public int yLimit = PixelLegend.HEIGHT;
 	//public int yLimitU = -50;
@@ -74,12 +76,12 @@ public class Player extends Object{
 	
 	public void attack() {
 		if(facing == FACING_LEFT) {
-			PlayerAttack attack = new PlayerAttack(x - 16, y + 3, 30, 31, FACING_LEFT, mDmg);
+			PlayerAttack attack = new PlayerAttack(x - 16, y - 2, 30, 42, FACING_LEFT, mDmg);
 			Manager.playerAttacks.add(attack);
 			attack.attack();
 		}
 		if(facing == FACING_RIGHT) {
-			PlayerAttack attack = new PlayerAttack(x + width - 14, y + 3, 30, 31, FACING_RIGHT, mDmg);
+			PlayerAttack attack = new PlayerAttack(x + width - 14, y - 2, 30, 42, FACING_RIGHT, mDmg);
 			Manager.playerAttacks.add(attack);
 			attack.attack();
 		}
@@ -122,15 +124,19 @@ public class Player extends Object{
 				kXV = 0;
 				kDir = 3;
 			}
+			xVelocity = 3;
 		}
-		if(kXV > 0) {
+		else if(kXV > 0) {
 			kXV -= 1;
 			if(kXV < 0) {
 				kXV = 0;
 				kDir = 3;
 			}
+			xVelocity = 3;
 		}
-		
+		else {
+			xVelocity = 6;
+		}
 		
 		Rectangle newCBox = new Rectangle(newX, y, width, height);
 		

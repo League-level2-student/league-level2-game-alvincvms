@@ -11,24 +11,27 @@ public class Warrior extends Monster{
 	
 	Warrior(int x, int y, int width, int height){
 		super(x, y, width, height, 180);
-		xV = 4;
+		xV = 0;
 		yV = 0;
 		dmg = 15;
+		health = 100;
 	}
 	
 	void update() {
-		
 		
 		if(Monster.playerInSight(vBox)) {
 			//alertCooldown = 60;
 			if(Manager.p.x < x) {
 				facing = Object.FACING_LEFT;
-				x -= xV;
+				xV = -4;
 			}
 			if(Manager.p.x > x) {
 				facing = Object.FACING_RIGHT;
-				x += xV;
+				xV = 4;
 			}
+		}
+		else {
+			xV = 0;
 		}
 		/*else {
 			if(alertCooldown > 0) {
@@ -42,6 +45,8 @@ public class Warrior extends Monster{
 		if(cBox.intersects(Manager.p.cBox)) {
 			Manager.p.knockback(12, facing);
 		}
+		
+		move();
 		
 		gravity();
 		
@@ -58,6 +63,51 @@ public class Warrior extends Monster{
 		dir = r.nextInt(2);
 		distance = r.nextInt(400);
 	}*/
+	
+	void move() {
+		int newX = x;
+		
+		if(kXV < 0) {
+			kXV += 1;
+			if(kXV > 0) {
+				kXV = 0;
+				kDir = 3;
+			}
+		}
+		if(kXV > 0) {
+			kXV -= 1;
+			if(kXV < 0) {
+				kXV = 0;
+				kDir = 3;
+			}
+		}
+		
+		newX += kXV;
+		newX += xV;
+		
+		Rectangle newCBox = new Rectangle(newX, y, width, height);
+		
+		if(Manager.checkSolidCollision(newCBox) == false) {
+			x = newX;	
+		}
+		else {
+			if(xV < 0 && !(kXV > 0)|| kXV < 0) {
+				while(Manager.checkSolidCollision(newCBox) == true) {
+					newX += 1;
+					newCBox = new Rectangle(newX, y, width, height);
+				}
+				x = newX;
+			}
+			
+			if(xV > 0 && !(kXV < 0)|| kXV > 0) {
+				while(Manager.checkSolidCollision(newCBox) == true) {
+					newX -= 1;
+					newCBox = new Rectangle(newX, y, width, height);
+				}
+				x = newX;
+			}
+		}
+	}
 	
 	void gravity() {
 		int newY = y;
