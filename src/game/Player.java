@@ -12,8 +12,9 @@ public class Player extends Object{
 	int kXV;
 	int kYV;
 	int kDir;
-	int mDmg = 17;
-	int rDmg = 8;
+	int mDmg = 18;
+	int rDmg = 15;
+	int hurtTimer = 0;
 	public static int playerX;
 	public static int playerY;
 	public static int playerWidth;
@@ -36,11 +37,16 @@ public class Player extends Object{
 	boolean escPlatform = false;
 	boolean platformCollision = false;
 	
+	HealthBar hBar = new HealthBar(75, 50, 175, 20, 1);
+	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		facing = FACING_RIGHT;
 		playerWidth = width;
 		playerHeight = height;
+		maxHP = 200;
+		health = 200;
+		hBar.outline = true;
 	}
 	
 	public void jump() {
@@ -100,6 +106,13 @@ public class Player extends Object{
 	
 	void update() {
 		newMove();
+		
+		hBar = new HealthBar(75, 50, 175, 20, (double) health/maxHP);
+		hBar.outline = true;
+		
+		if(hurtTimer > 0) {
+			hurtTimer--;
+		}
 	} 
 	
 	void newMove() {
@@ -268,8 +281,14 @@ public class Player extends Object{
 	}*/
 	
 	void draw(Graphics g) {
-		g.setColor(Color.blue);
+		if(hurtTimer > 0 && hurtTimer % 4 <= 2) {
+			g.setColor(Color.cyan);
+		}
+		else {
+			g.setColor(Color.blue);
+		}
 		g.fillRect(x, y, width, height);
+		hBar.draw(g);
 	}
 	
 	/*public void setYLimit(int limit) {

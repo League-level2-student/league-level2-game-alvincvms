@@ -15,15 +15,20 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	final int TUTORIAL = 1;
 	final int IN_GAME = 2;
 	final int END_STATE = 3;
-	final int R_start = 0;
+	final int SETTINGS = 4;
+	static final int EASY = 0;
+	static final int MEDIUM = 1;
+	static final int HARD = 2;
+	static final int EXPERT = 4;
+	static final int NIGHTMARE = 6;
 	boolean KPressed = false;
+	static int difficulty = EASY;
 	
 	Object object;
 	Player player = new Player(100, 100, 17, 38);
 	Manager manager = new Manager(player);
 	
 	int currentState = MAIN_MENU;
-	int currentRoom = R_start;
 	
 	public static int attackCooldown = 0;
 	
@@ -73,6 +78,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	void updateEnd() {
 		
 	}
+	void updateSettings() {
+		
+	}
 	
 	void drawMainMenu(Graphics g) {
 		
@@ -84,6 +92,13 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		Manager.draw(g);
 	}
 	void drawEnd(Graphics g) {
+		
+	}
+	void drawSettings(Graphics g) {
+		
+	}
+	
+	public void updateState() {
 		
 	}
 	
@@ -136,6 +151,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			if (currentState == MAIN_MENU && e.getKeyCode() == KeyEvent.VK_T){
 				currentState = TUTORIAL;
 			}
+			else if(currentState == MAIN_MENU && e.getKeyCode() == KeyEvent.VK_S) {
+				currentState = SETTINGS;
+			}
 			else if (currentState == MAIN_MENU) {
 				currentState = IN_GAME;
 			}
@@ -144,6 +162,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			else if(currentState == END_STATE) {
 				currentState = MAIN_MENU;
+			}
+			else if(currentState == SETTINGS) {
+				currentState = MAIN_MENU;
+			}
+			if(currentState != IN_GAME) {
+				updateState();
 			}
 			KPressed = true;
 		}

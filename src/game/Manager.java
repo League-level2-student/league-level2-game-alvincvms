@@ -43,8 +43,12 @@ public class Manager {
 					for(int n = 0; n < warriors.size(); n++) {
 						if(playerAttacks.get(i).cBox.intersects(warriors.get(n).cBox)) {
 							playerAttacks.get(i).isAlive = false;
-							warriors.get(n).knockback(16, playerAttacks.get(i).facing);
+							warriors.get(n).knockback(14, playerAttacks.get(i).facing);
+							warriors.get(n).hurtTimer = 24;
 							warriors.get(n).health -= playerAttacks.get(i).dmg;
+							if(warriors.get(n).health <= 0) {
+								warriors.get(n).isAlive = false;
+							}
 						}
 					}
 				}
@@ -55,10 +59,14 @@ public class Manager {
 			for(int i = 0; i < playerProjectiles.size(); i++) {
 				if(warriors.size() > 0) {
 					for(int n = 0; n < warriors.size(); n++) {
-						if(playerProjectiles.get(i).cBox.intersects(warriors.get(n).cBox)) {
+						if(playerProjectiles.get(i).cBox.intersects(warriors.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
 							warriors.get(n).knockback(9, playerProjectiles.get(i).facing);
+							warriors.get(n).hurtTimer = 10;
 							warriors.get(n).health -= playerProjectiles.get(i).dmg;
+							if(warriors.get(n).health <= 0) {
+								warriors.get(n).isAlive = false;
+							}
 						}
 					}
 				}
@@ -132,6 +140,11 @@ public class Manager {
 		for(int i = 0; i < playerProjectiles.size(); i++) {
 			if(!playerProjectiles.get(i).isAlive) {
 				playerProjectiles.remove(i);
+			}
+		}
+		for(int i = 0; i < warriors.size(); i++) {
+			if(!warriors.get(i).isAlive) {
+				warriors.remove(i);
 			}
 		}
 	}

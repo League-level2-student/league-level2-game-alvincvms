@@ -8,13 +8,33 @@ import java.util.Random;
 public class Warrior extends Monster{
 	
 	//int alertCooldown = 0;
+	HealthBar hBar = new HealthBar(x - 4, y - 10, 25, 6, 1);
 	
 	Warrior(int x, int y, int width, int height){
 		super(x, y, width, height, 180);
 		xV = 0;
 		yV = 0;
 		dmg = 15;
-		health = 100;
+		if(Game.difficulty == Game.EASY) {
+			maxHP = 72;
+			health = 72;
+		}
+		if(Game.difficulty == Game.MEDIUM) {
+			maxHP = 90;
+			health = 90;
+		}
+		if(Game.difficulty == Game.HARD) {
+			maxHP = 120;
+			health = 120;
+		}
+		if(Game.difficulty == Game.EXPERT) {
+			maxHP = 135;
+			health = 135;
+		}
+		if(Game.difficulty == Game.NIGHTMARE) {
+			maxHP = 160;
+			health = 160;
+		}
 	}
 	
 	void update() {
@@ -23,11 +43,27 @@ public class Warrior extends Monster{
 			//alertCooldown = 60;
 			if(Manager.p.x < x) {
 				facing = Object.FACING_LEFT;
-				xV = -4;
+				if(Game.difficulty == Game.NIGHTMARE) {
+					xV = -5;
+				}
+				else if(Game.difficulty == Game.EXPERT){
+					xV = -4;
+				}
+				else {
+					xV = -3;
+				}
 			}
 			if(Manager.p.x > x) {
 				facing = Object.FACING_RIGHT;
-				xV = 4;
+				if(Game.difficulty == Game.NIGHTMARE) {
+					xV = 5;
+				}
+				else if(Game.difficulty == Game.EXPERT){
+					xV = 4;
+				}
+				else {
+					xV = 3;
+				}
 			}
 		}
 		else {
@@ -42,15 +78,40 @@ public class Warrior extends Monster{
 			}
 		}*/
 		
-		if(cBox.intersects(Manager.p.cBox)) {
-			Manager.p.knockback(12, facing);
+		if(cBox.intersects(Manager.p.cBox) && Manager.p.hurtTimer <= 0) {
+			if(Game.difficulty == Game.EASY) {
+				Manager.p.health -= 16;
+				Manager.p.knockback(12, facing);
+				Manager.p.hurtTimer = 42;
+			}
+			if(Game.difficulty == Game.MEDIUM) {
+				Manager.p.health -= 22;
+				Manager.p.knockback(12, facing);
+				Manager.p.hurtTimer = 32;
+			}
+			if(Game.difficulty == Game.HARD) {
+				Manager.p.health -= 25;
+				Manager.p.knockback(12, facing);
+				Manager.p.hurtTimer = 27;
+			}
+			if(Game.difficulty == Game.EXPERT) {
+				Manager.p.health -= 35;
+				Manager.p.knockback(12, facing);
+				Manager.p.hurtTimer = 25;
+			}
+			if(Game.difficulty == Game.NIGHTMARE) {
+				Manager.p.health -= 50;
+				Manager.p.knockback(12, facing);
+				Manager.p.hurtTimer = 22;
+			}
 		}
 		
 		move();
-		
 		gravity();
 		
+		hBar = new HealthBar(x - 4, y - 10, 25, 6, (double)health/maxHP);
 		super.update();
+		
 		if(hurtTimer > 0) {
 			hurtTimer--;
 		}
@@ -140,5 +201,6 @@ public class Warrior extends Monster{
 			g.setColor(Color.red);
 		}
 		g.fillRect(x, y, width, height);
+		hBar.draw(g);
 	}
 }

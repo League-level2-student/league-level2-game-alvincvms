@@ -9,6 +9,7 @@ public class Object {
 	int y;
 	int width;
 	int height;
+	int maxHP;
 	int health;
 	boolean isAlive = true;
 	

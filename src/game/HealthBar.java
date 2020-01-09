@@ -6,6 +6,7 @@ import java.awt.Graphics;
 public class HealthBar extends Object{
 
 	double hpPercentage;
+	boolean outline = false;
 	
 	HealthBar(int x, int y, int width, int height, double hpPercentage){
 		super(x, y, width, height);
@@ -17,6 +18,10 @@ public class HealthBar extends Object{
 	}
 	
 	void draw(Graphics g) {
+		if(outline) {
+			g.setColor(Color.black);
+			g.fillRect(x - 5, y - 5, width + 10, height + 10);
+		}
 		g.setColor(Color.red);
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.green);
