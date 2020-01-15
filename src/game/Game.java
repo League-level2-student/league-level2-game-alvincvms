@@ -1,21 +1,24 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Game extends JPanel implements ActionListener, KeyListener{
 
-	final int MAIN_MENU = 0;
-	final int TUTORIAL = 1;
-	final int IN_GAME = 2;
-	final int END_STATE = 3;
-	final int SETTINGS = 4;
+	static final int MAIN_MENU = 0;
+	static final int TUTORIAL = 1;
+	static final int IN_GAME = 2;
+	static final int END_STATE = 3;
+	static final int SETTINGS = 4;
 	static final int EASY = 0;
 	static final int MEDIUM = 1;
 	static final int HARD = 2;
@@ -83,10 +86,30 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void drawMainMenu(Graphics g) {
-		
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+		g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+		g.setColor(Color.black);
+		g.drawString("Main Menu", 300, 50);
+		g.drawString("Press [T] for tutorial", 250, 280);
+		g.drawString("Press [S] for difficulty settings", 200, 310);
+		g.drawString("Press any other key to start game", 190, 350);
+		g.setFont(new Font("Skia", Font.PLAIN, 48));
+		g.drawString("Pixel Legends", 220, 180);
 	}
 	void drawTutorial(Graphics g) {
-		
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+		g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+		g.setColor(Color.black);
+		g.drawString("Tutorial", 320, 50);
+		g.drawString("Use the arrow keys to move left and right.", 160, 100);
+		g.drawString("Press [space] to jump.", 240, 140);
+		g.drawString("Press [F] to perform a melee attack.", 180, 220);
+		g.drawString("Press [G] to perform a ranged attack.", 180, 260);
+		g.drawString("Press any key to continue", 220, 550);
+		g.setFont(new Font("Papyrus", Font.PLAIN, 20));
+		g.drawString("Press [space] while holding [shift] makes you fall faster or off a platform.", 50, 180);
 	}
 	void drawGame(Graphics g) {
 		Manager.draw(g);
@@ -95,7 +118,18 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	void drawSettings(Graphics g) {
-		
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+		g.setColor(Color.black);
+		g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+		g.drawString("Difficulty Settings", 270, 50);
+		g.drawString("Press any other key to continue", 220, 550);
+		g.setFont(new Font("Papyrus", Font.PLAIN, 30));
+		g.drawString("Press [1] for easy", 230, 200);
+		g.drawString("Press [2] for normal", 230, 240);
+		g.drawString("Press [3] for hard", 230, 280);
+		g.drawString("Press [4] for expert", 230, 320);
+		g.drawString("Press [5] for nightmare", 230, 360);
 	}
 	
 	public void updateState() {
@@ -115,6 +149,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		}
 		if(currentState == END_STATE) {
 			drawEnd(g);
+		}
+		if(currentState == SETTINGS) {
+			drawSettings(g);
 		}
 		
 	}
@@ -153,6 +190,26 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			else if(currentState == MAIN_MENU && e.getKeyCode() == KeyEvent.VK_S) {
 				currentState = SETTINGS;
+			}
+			else if(currentState == SETTINGS && e.getKeyCode() == KeyEvent.VK_1) {
+				difficulty = EASY;
+				System.out.println("difficulty set to easy");
+			}
+			else if(currentState == SETTINGS && e.getKeyCode() == KeyEvent.VK_2) {
+				difficulty = MEDIUM;
+				System.out.println("difficulty set to normal");
+			}
+			else if(currentState == SETTINGS && e.getKeyCode() == KeyEvent.VK_3) {
+				difficulty = HARD;
+				System.out.println("difficulty set to hard");
+			}
+			else if(currentState == SETTINGS && e.getKeyCode() == KeyEvent.VK_4) {
+				difficulty = EXPERT;
+				System.out.println("difficulty set to expert");
+			}
+			else if(currentState == SETTINGS && e.getKeyCode() == KeyEvent.VK_5) {
+				difficulty = NIGHTMARE;
+				System.out.println("difficulty set to nightmare");
 			}
 			else if (currentState == MAIN_MENU) {
 				currentState = IN_GAME;

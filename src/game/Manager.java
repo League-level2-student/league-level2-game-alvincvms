@@ -61,7 +61,7 @@ public class Manager {
 					for(int n = 0; n < warriors.size(); n++) {
 						if(playerProjectiles.get(i).cBox.intersects(warriors.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
-							warriors.get(n).knockback(9, playerProjectiles.get(i).facing);
+							warriors.get(n).knockback(12, playerProjectiles.get(i).facing);
 							warriors.get(n).hurtTimer = 10;
 							warriors.get(n).health -= playerProjectiles.get(i).dmg;
 							if(warriors.get(n).health <= 0) {
