@@ -2,12 +2,28 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import game.PlayerAttack.FinishAttack;
 
 public class PlayerProjectile extends Object{
 	
 	int dmg;
 	int xVelocity = 8;
 	boolean spawned = false;
+	Timer timer;
+	TimerTask task = new FinishAttack();
+	
+	class FinishAttack extends TimerTask {
+
+
+		public void run() {
+
+			isAlive = false;
+		}
+		
+	}
 	
 	PlayerProjectile(int x, int y, int width, int height, int direction, int dmg){
 		super(x, y, width, height);
@@ -40,5 +56,9 @@ public class PlayerProjectile extends Object{
 	
 	void finishAttack() {
 		isAlive = false;
+	}
+	
+	void attack() {
+		timer.schedule(task, 160);
 	}
 }

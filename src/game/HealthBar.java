@@ -20,7 +20,7 @@ public class HealthBar extends Object{
 	void draw(Graphics g) {
 		if(outline) {
 			g.setColor(Color.black);
-			g.fillRect(x - 5, y - 5, width + 10, height + 10);
+			g.fillRect(x - 3, y - 3, width + 6, height + 6);
 		}
 		g.setColor(Color.red);
 		g.fillRect(x, y, width, height);

@@ -67,6 +67,9 @@ public class Manager {
 							if(warriors.get(n).health <= 0) {
 								warriors.get(n).isAlive = false;
 							}
+							if(!Monster.playerInSight(warriors.get(n).vBox)) {
+								warriors.get(n).vLength += 80;
+							}
 						}
 					}
 				}

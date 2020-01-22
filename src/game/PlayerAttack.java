@@ -32,7 +32,7 @@ public class PlayerAttack extends Object{
 		*/
 		
 		if(facing == FACING_LEFT) {
-			x = Player.playerX - 16;
+			x = Player.playerX - 25;
 			y = Player.playerY - 2;
 		}
 		if(facing == FACING_RIGHT) {

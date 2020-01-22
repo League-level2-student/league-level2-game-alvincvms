@@ -96,6 +96,30 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		g.drawString("Press any other key to start game", 190, 350);
 		g.setFont(new Font("Skia", Font.PLAIN, 48));
 		g.drawString("Pixel Legends", 220, 180);
+		
+		g.setFont(new Font("Papyrus", Font.PLAIN, 30));
+		g.drawString("Current difficulty:", 170, 420);
+		g.setFont(new Font("Rockwell", Font.PLAIN, 24));
+		if(difficulty == EASY) {
+			g.setColor(new Color(0, 255, 51));
+			g.drawString("EASY", 450, 420);
+		}
+		if(difficulty == MEDIUM) {
+			g.setColor(new Color(51, 153, 255));
+			g.drawString("NORMAL", 450, 420);
+		}
+		if(difficulty == HARD) {
+			g.setColor(new Color(255, 255, 0));
+			g.drawString("HARD", 450, 420);
+		}
+		if(difficulty == EXPERT) {
+			g.setColor(new Color(255, 153, 0));
+			g.drawString("EXPERT", 450, 420);
+		}
+		if(difficulty == NIGHTMARE) {
+			g.setColor(new Color(255, 0, 0));
+			g.drawString("NIGHTMARE", 450, 420);
+		}
 	}
 	void drawTutorial(Graphics g) {
 		g.setColor(Color.lightGray);
@@ -113,6 +137,16 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	void drawGame(Graphics g) {
 		Manager.draw(g);
+		g.setFont(new Font("Arial", Font.BOLD, 24));
+		g.setColor(Color.black);
+		g.drawString("HP", 30, 70);
+		g.setFont(new Font("Arial", Font.PLAIN, 22));
+		if(Manager.p.health >= 0) {
+			g.drawString(Manager.p.health + "/" + Manager.p.maxHP, 120, 69);
+		}
+		else {
+			g.drawString(0 + "/" + Manager.p.maxHP, 120, 69);
+		}
 	}
 	void drawEnd(Graphics g) {
 		
@@ -125,11 +159,38 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		g.drawString("Difficulty Settings", 270, 50);
 		g.drawString("Press any other key to continue", 220, 550);
 		g.setFont(new Font("Papyrus", Font.PLAIN, 30));
+		g.drawString("Current difficulty:", 150, 125);
 		g.drawString("Press [1] for easy", 230, 200);
 		g.drawString("Press [2] for normal", 230, 240);
 		g.drawString("Press [3] for hard", 230, 280);
 		g.drawString("Press [4] for expert", 230, 320);
 		g.drawString("Press [5] for nightmare", 230, 360);
+		g.setFont(new Font("Rockwell", Font.PLAIN, 24));
+		if(difficulty == EASY) {
+			g.setColor(new Color(0, 255, 51));
+			g.drawString("EASY", 400, 125);
+			g.drawString("A great experience!", 237, 420);
+		}
+		if(difficulty == MEDIUM) {
+			g.setColor(new Color(51, 153, 255));
+			g.drawString("NORMAL", 400, 125);
+			g.drawString("Your journey awaits.", 235, 420);
+		}
+		if(difficulty == HARD) {
+			g.setColor(new Color(255, 255, 0));
+			g.drawString("HARD", 400, 125);
+			g.drawString("A good challenge.", 246, 420);
+		}
+		if(difficulty == EXPERT) {
+			g.setColor(new Color(255, 153, 0));
+			g.drawString("EXPERT", 400, 125);
+			g.drawString("Only for the pros!", 240, 420);
+		}
+		if(difficulty == NIGHTMARE) {
+			g.setColor(new Color(255, 0, 0));
+			g.drawString("NIGHTMARE", 400, 125);
+			g.drawString("IMPOSSIBLE.", 270, 420);
+		}
 	}
 	
 	public void updateState() {
@@ -266,8 +327,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				Manager.warriors.add(new Warrior(Manager.p.x, Manager.p.y, 17, 38));
 			}
 			
-			if(e.getKeyCode() == KeyEvent.VK_K) {
-				System.out.println(Manager.warriors.get(0).x +","+ Manager.warriors.get(0).y);
+			if(e.getKeyCode() == KeyEvent.VK_L) {
+				Manager.p.health = 5000;
 			}
 			
 		}

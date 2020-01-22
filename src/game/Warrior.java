@@ -14,7 +14,6 @@ public class Warrior extends Monster{
 		super(x, y, width, height, 180);
 		xV = 0;
 		yV = 0;
-		dmg = 15;
 		if(Game.difficulty == Game.EASY) {
 			maxHP = 72;
 			health = 72;

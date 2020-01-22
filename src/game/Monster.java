@@ -30,7 +30,7 @@ public class Monster extends Object{
 	}
 	
 	void update() {
-		vBox.setBounds(x - vLength, y, x + width + vLength, height);
+		vBox.setBounds(x - vLength, y, width + 2 * vLength, height);
 		super.update();
 	}
 	
