@@ -350,7 +350,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 					Manager.playerAttacks.get(i).isAlive = false;
 				}*/
 				//Manager.p.knockback(15, Object.FACING_RIGHT);
-				Manager.archers.add(new Archer(Manager.p.x, Manager.p.y, 17, 38));
+				Manager.boss.add(new The_Inquisitor(Manager.p.x, Manager.p.y, 30, 56));
+			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_K) {
+				currentState = END_STATE;
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_L) {

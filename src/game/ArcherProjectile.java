@@ -12,6 +12,7 @@ public class ArcherProjectile extends Object{
 	int dmg;
 	int xVelocity = 6;
 	boolean spawned = false;
+	int PHT;
 	Timer timer;
 	TimerTask task = new FinishAttack();
 	
@@ -21,10 +22,11 @@ public class ArcherProjectile extends Object{
 		}
 	}
 	
-	ArcherProjectile(int x, int y, int width, int height, int direction, int dmg){
+	ArcherProjectile(int x, int y, int width, int height, int direction, int dmg, int PHT){
 		super(x, y, width, height);
 		facing = direction;
 		this.dmg = dmg;
+		this.PHT = PHT;
 		timer = new Timer();
 	}
 	

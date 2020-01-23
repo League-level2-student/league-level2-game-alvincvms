@@ -11,6 +11,7 @@ public class Manager {
 	static ArrayList<Warrior> warriors = new ArrayList<Warrior>();
 	static ArrayList<Archer> archers = new ArrayList<Archer>();
 	static ArrayList<ArcherProjectile> archerProjectiles = new ArrayList<ArcherProjectile>();
+	static ArrayList<The_Inquisitor> boss = new ArrayList<The_Inquisitor>();
 	
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
@@ -44,6 +45,9 @@ public class Manager {
 		for(ArcherProjectile p : archerProjectiles) {
 			p.update();
 		}
+		for(The_Inquisitor b : boss) {
+			b.update();
+		}
 		
 		if(playerAttacks.size() > 0) {
 			for(int i = 0; i < playerAttacks.size(); i++) {
@@ -73,6 +77,18 @@ public class Manager {
 						}
 					}
 				}
+				if(boss.size() > 0) {
+					for(int n = 0; n < boss.size(); n++) {
+						if(playerAttacks.get(i).cBox.intersects(boss.get(n).cBox)) {
+							playerAttacks.get(i).isAlive = false;
+							boss.get(n).hurtTimer = 18;
+							boss.get(n).health -= playerAttacks.get(i).dmg;
+							if(boss.get(n).health <= 0) {
+								boss.get(n).isAlive = false;
+							}
+						}
+					}
+				}
 			}
 		}
 		if(playerProjectiles.size() > 0) {
@@ -97,7 +113,7 @@ public class Manager {
 					for(int n = 0; n < archers.size(); n++) {
 						if(playerProjectiles.get(i).cBox.intersects(archers.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
-							archers.get(n).knockback(12, playerProjectiles.get(i).facing);
+							archers.get(n).knockback(10, playerProjectiles.get(i).facing);
 							archers.get(n).hurtTimer = 10;
 							archers.get(n).health -= playerProjectiles.get(i).dmg;
 							if(archers.get(n).health <= 0) {
@@ -108,6 +124,38 @@ public class Manager {
 							}
 						}
 					}
+				}
+				if(boss.size() > 0) {
+					for(int n = 0; n < boss.size(); n++) {
+						if(playerProjectiles.get(i).cBox.intersects(boss.get(n).cBox) && playerProjectiles.get(i).isAlive) {
+							playerProjectiles.get(i).isAlive = false;
+							boss.get(n).hurtTimer = 10;
+							boss.get(n).health -= playerProjectiles.get(i).dmg;
+							if(boss.get(n).health <= 0) {
+								boss.get(n).isAlive = false;
+							}
+							if(!Monster.playerInSight(boss.get(n).vBox)) {
+								boss.get(n).vLength += 500;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(archerProjectiles.size() > 0) {
+			for(int i = 0; i < archerProjectiles.size(); i++) {
+				if(playerAttacks.size() > 0) {
+					for(int a = 0; a < playerAttacks.size(); a++) {
+						if(archerProjectiles.get(i).cBox.intersects(playerAttacks.get(a).cBox)) {
+							archerProjectiles.get(i).finishAttack();
+						}
+					}
+				}
+				if(archerProjectiles.get(i).cBox.intersects(p.cBox) && Manager.p.hurtTimer <= 0 && archerProjectiles.get(i).isAlive) {
+					Manager.p.health -= archerProjectiles.get(i).dmg;
+					Manager.p.knockback(10, archerProjectiles.get(i).facing);
+					Manager.p.hurtTimer = archerProjectiles.get(i).PHT;
+					archerProjectiles.get(i).finishAttack();
 				}
 			}
 		}
@@ -136,6 +184,9 @@ public class Manager {
 		}
 		for(ArcherProjectile p : archerProjectiles) {
 			p.draw(g);
+		}
+		for(The_Inquisitor b : boss) {
+			b.draw(g);
 		}
 	}
 	
@@ -199,6 +250,11 @@ public class Manager {
 		for(int i = 0; i < archerProjectiles.size(); i++) {
 			if(!archerProjectiles.get(i).isAlive) {
 				archerProjectiles.remove(i);
+			}
+		}
+		for(int i = 0; i < boss.size(); i++) {
+			if(!boss.get(i).isAlive) {
+				boss.remove(i);
 			}
 		}
 		

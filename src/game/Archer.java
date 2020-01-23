@@ -8,8 +8,10 @@ public class Archer extends Monster{
 
 	HealthBar hBar = new HealthBar(x - 4, y - 10, 25, 6, 1);
 	int AR = 160;
+	int PHT;
 	
 	public int attackCooldown;
+	int ACDTimer = 0;
 	
 	Archer(int x, int y, int width, int height){
 		super(x, y, width, height, 270);
@@ -19,26 +21,36 @@ public class Archer extends Monster{
 			maxHP = 31;
 			health = 31;
 			dmg = 12;
+			PHT = 52;
+			attackCooldown = 120;
 		}
 		if(Game.difficulty == Game.MEDIUM) {
 			maxHP = 48;
 			health = 48;
 			dmg = 20;
+			PHT = 36;
+			attackCooldown = 92;
 		}
 		if(Game.difficulty == Game.HARD) {
 			maxHP = 75;
 			health = 75;
 			dmg = 25;
+			PHT = 28;
+			attackCooldown = 75;
 		}
 		if(Game.difficulty == Game.EXPERT) {
 			maxHP = 95;
 			health = 95;
 			dmg = 29;
+			PHT = 25;
+			attackCooldown = 50;
 		}
 		if(Game.difficulty == Game.NIGHTMARE) {
-			maxHP = 136;
-			health = 136;
+			maxHP = 120;
+			health = 120;
 			dmg = 65;
+			PHT = 21;
+			attackCooldown = 36;
 		}
 	}
 	
@@ -84,6 +96,9 @@ public class Archer extends Monster{
 		
 		if(hurtTimer > 0) {
 			hurtTimer--;
+		}
+		if(ACDTimer > 0) {
+			ACDTimer--;
 		}
 		
 	}
@@ -157,15 +172,18 @@ public class Archer extends Monster{
 	}
 	
 	void attack() {
-		if(facing == FACING_LEFT) {
-			ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_LEFT, dmg);
-			Manager.archerProjectiles.add(p);
-			p.attack();
-		}
-		if(facing == FACING_RIGHT) {
-			ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_RIGHT, dmg);
-			Manager.archerProjectiles.add(p);
-			p.attack();
+		if(ACDTimer <= 0) {
+			if(facing == FACING_LEFT) {
+				ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_LEFT, dmg, PHT);
+				Manager.archerProjectiles.add(p);
+				p.attack();
+			}
+			if(facing == FACING_RIGHT) {
+				ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_RIGHT, dmg, PHT);
+				Manager.archerProjectiles.add(p);
+				p.attack();
+			}
+			ACDTimer = attackCooldown;
 		}
 	}
 	

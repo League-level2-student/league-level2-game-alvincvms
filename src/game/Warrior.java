@@ -81,27 +81,27 @@ public class Warrior extends Monster{
 			if(Game.difficulty == Game.EASY) {
 				Manager.p.health -= 12;
 				Manager.p.knockback(12, facing);
-				Manager.p.hurtTimer = 55;
+				Manager.p.hurtTimer = 60;
 			}
 			if(Game.difficulty == Game.MEDIUM) {
 				Manager.p.health -= 19;
 				Manager.p.knockback(12, facing);
-				Manager.p.hurtTimer = 40;
+				Manager.p.hurtTimer = 50;
 			}
 			if(Game.difficulty == Game.HARD) {
 				Manager.p.health -= 24;
 				Manager.p.knockback(12, facing);
-				Manager.p.hurtTimer = 30;
+				Manager.p.hurtTimer = 36;
 			}
 			if(Game.difficulty == Game.EXPERT) {
 				Manager.p.health -= 33;
 				Manager.p.knockback(12, facing);
-				Manager.p.hurtTimer = 27;
+				Manager.p.hurtTimer = 29;
 			}
 			if(Game.difficulty == Game.NIGHTMARE) {
 				Manager.p.health -= 50;
 				Manager.p.knockback(12, facing);
-				Manager.p.hurtTimer = 22;
+				Manager.p.hurtTimer = 24;
 			}
 		}
 		
