@@ -5,12 +5,12 @@ import java.awt.Graphics;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import game.PlayerAttack.FinishAttack;
+import game.PlayerProjectile.FinishAttack;
 
-public class PlayerProjectile extends Object{
+public class ArcherProjectile extends Object{
 	
 	int dmg;
-	int xVelocity = 8;
+	int xVelocity = 6;
 	boolean spawned = false;
 	Timer timer;
 	TimerTask task = new FinishAttack();
@@ -21,7 +21,7 @@ public class PlayerProjectile extends Object{
 		}
 	}
 	
-	PlayerProjectile(int x, int y, int width, int height, int direction, int dmg){
+	ArcherProjectile(int x, int y, int width, int height, int direction, int dmg){
 		super(x, y, width, height);
 		facing = direction;
 		this.dmg = dmg;
@@ -47,7 +47,7 @@ public class PlayerProjectile extends Object{
 	}
 	
 	void draw(Graphics g) {
-		g.setColor(Color.orange);
+		g.setColor(Color.magenta);
 		g.fillRect(x, y, width, height);
 	}
 	
@@ -56,6 +56,6 @@ public class PlayerProjectile extends Object{
 	}
 	
 	void attack() {
-		timer.schedule(task, 1200);
+		timer.schedule(task, 5000);
 	}
 }

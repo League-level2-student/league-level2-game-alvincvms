@@ -309,12 +309,38 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_F && attackCooldown == 0) {
+				int EXC = 1;
+				if(difficulty == MEDIUM) {
+					EXC = 2;
+				}
+				if(difficulty == HARD) {
+					EXC = 4;
+				}
+				if(difficulty == EXPERT) {
+					EXC = 6;
+				}
+				if(difficulty == NIGHTMARE) {
+					EXC = 8;
+				}
 				Manager.p.attack();
-				attackCooldown = Manager.p.attackCooldown;
+				attackCooldown = Manager.p.attackCooldown + EXC;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_G && attackCooldown == 0) {
+				int EXC = 1;
+				if(difficulty == MEDIUM) {
+					EXC = 3;
+				}
+				if(difficulty == HARD) {
+					EXC = 5;
+				}
+				if(difficulty == EXPERT) {
+					EXC = 7;
+				}
+				if(difficulty == NIGHTMARE) {
+					EXC = 8;
+				}
 				Manager.p.shoot();
-				attackCooldown = Manager.p.attackCooldown;
+				attackCooldown = Manager.p.attackCooldown + EXC;
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_U) {
@@ -324,11 +350,14 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 					Manager.playerAttacks.get(i).isAlive = false;
 				}*/
 				//Manager.p.knockback(15, Object.FACING_RIGHT);
-				Manager.warriors.add(new Warrior(Manager.p.x, Manager.p.y, 17, 38));
+				Manager.archers.add(new Archer(Manager.p.x, Manager.p.y, 17, 38));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_L) {
 				Manager.p.health = 5000;
+				Manager.p.attackCooldown = -1;
+				Manager.p.mDmg = 200;
+				Manager.p.rDmg = 200;
 			}
 			
 		}

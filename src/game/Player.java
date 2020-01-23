@@ -27,7 +27,7 @@ public class Player extends Object{
 	//public int xLimitR = PixelLegend.WIDTH;
 	//public int xLimitL = 0;
 	
-	public int attackCooldown = 14;
+	public int attackCooldown = 8;
 	
 	int canJump = 0;
 	boolean canFall = true;
