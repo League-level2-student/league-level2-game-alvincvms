@@ -1,10 +1,15 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class The_Inquisitor extends Monster{
+	int attackMode = 0;
+	boolean attackFinished = true;
+	int cdTimer = 0;
+	int atkCounter = 0;
 	
 	HealthBar hBar = new HealthBar(150, 100, 450, 20, 1);
 	
@@ -62,6 +67,54 @@ public class The_Inquisitor extends Monster{
 			Manager.p.knockback(11, facing);
 		}
 		
+		if(Monster.playerInSight(vBox)) {
+			vLength = 500;
+			if(Manager.p.x < x) {
+				facing = Object.FACING_LEFT;
+			}
+			if(Manager.p.x + Manager.p.width > x + width) {
+				facing = Object.FACING_RIGHT;
+			}
+			if(cdTimer == 0) {
+				if(!attackFinished) {
+					if(attackMode == 1) {
+						if(facing == FACING_LEFT) {
+							ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 12, FACING_LEFT, (int) (dmg * 1.5), 12);
+							Manager.archerProjectiles.add(p);
+							p.attack();
+						}
+						if(facing == FACING_RIGHT) {
+							ArcherProjectile p = new ArcherProjectile(x + width - 21, y + 10, 21, 12, FACING_RIGHT, (int) (dmg * 1.5), 12);
+							Manager.archerProjectiles.add(p);
+							p.attack();
+						}
+						cdTimer = 8;
+						atkCounter--;
+						if(atkCounter == 0) {
+							attackFinished = true;
+							cdTimer = 65;
+						}
+					}
+					if(attackMode == 2) {
+						if(Manager.)
+						m2Move();
+					}
+				}
+				else {
+					if(attackMode == 0 || attackMode == 3) {
+						changeMode(5);
+					}
+					else if(attackMode == 1) {
+						changeMode(3);
+					}
+					else {
+						changeMode(0);
+					}
+				}
+			}
+		}
+		
+		
 		gravity();
 		
 		hBar = new HealthBar(150, 100, 450, 20, (double)health/maxHP);
@@ -71,6 +124,12 @@ public class The_Inquisitor extends Monster{
 		if(hurtTimer > 0) {
 			hurtTimer--;
 		}
+		
+		if(cdTimer > 0) {
+			cdTimer--;
+		}
+		
+		System.out.println(attackMode);
 	}
 	
 	void gravity() {
@@ -96,6 +155,46 @@ public class The_Inquisitor extends Monster{
 		}
 	}
 	
+	void m2Move() {
+		int newX = x;
+		
+		Rectangle newCBox = new Rectangle(newX, y, width, height);
+		
+		if(Manager.checkSolidCollision(newCBox) == false) {
+			x = newX;	
+		}
+		else {
+			if(xV < 0) {
+				while(Manager.checkSolidCollision(newCBox) == true) {
+					newX += 1;
+					newCBox = new Rectangle(newX, y, width, height);
+				}
+				x = newX;
+				cdTimer = 25;
+			}
+			
+			if(xV > 0) {
+				while(Manager.checkSolidCollision(newCBox) == true) {
+					newX -= 1;
+					newCBox = new Rectangle(newX, y, width, height);
+				}
+				x = newX;
+				cdTimer = 25;
+			}
+		}
+	}
+	
+	void changeMode(int atk) {
+		if(attackMode < 3) {
+			attackMode++;
+		}
+		else {
+			attackMode = 1;
+		}
+		attackFinished = false;
+		atkCounter = atk;
+	}
+	
 	void draw(Graphics g) {
 		if(hurtTimer > 0) {
 			g.setColor(Color.pink);
@@ -105,6 +204,14 @@ public class The_Inquisitor extends Monster{
 		}
 		g.fillRect(x, y, width, height);
 		hBar.draw(g);
-		g.setFont(new Font());
+		
+		g.setFont(new Font("TimesRoman", Font.ITALIC, 24));
+		g.setColor(Color.black);
+		g.drawString("The Inquisitor", 300, 85);
+		
+		g.setFont(new Font("Arial", Font.PLAIN, 22));
+		g.drawString(Integer.toString(health), 300, 117);
+		g.drawString("/", 367, 117);
+		g.drawString(Integer.toString(maxHP), 400, 117);
 	}
 }

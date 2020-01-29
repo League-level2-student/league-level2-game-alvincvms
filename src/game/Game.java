@@ -47,7 +47,6 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		Manager.platforms.add(new Platform(300,PixelLegend.HEIGHT-200,70,10));
 		Manager.platforms.add(new Platform(500,PixelLegend.HEIGHT-200,70,10));
 		Manager.sPlatforms.add(new SPlatform(200, PixelLegend.HEIGHT-100,70,10));
-		Manager.sPlatforms.add(new SPlatform(400, PixelLegend.HEIGHT-20,70,10));
 		Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
 		Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
 		Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
@@ -297,7 +296,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 				Manager.p.right = true;
 			}
-
+			
+			if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
+				Manager.p.height = 19;
+				Manager.p.y += 19;
+			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_SPACE){
 				if(e.isShiftDown() == true) {
@@ -350,7 +353,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 					Manager.playerAttacks.get(i).isAlive = false;
 				}*/
 				//Manager.p.knockback(15, Object.FACING_RIGHT);
-				Manager.boss.add(new The_Inquisitor(Manager.p.x, Manager.p.y, 30, 56));
+				Manager.boss.add(new The_Inquisitor(600, 100, 30, 56));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_K) {
@@ -376,6 +379,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 				Manager.p.right = false;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
+				Manager.p.height = 38;
+				Manager.p.y -= 19;
 			}
 		}
 		KPressed = false;
