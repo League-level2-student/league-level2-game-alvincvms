@@ -196,42 +196,32 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	public static void updateRoom() {
-		for(int i = 0; i < Manager.platforms.size(); i++) {
-			Manager.platforms.remove(i);
-		}
-		for(int i = 0; i < Manager.sPlatforms.size(); i++) {
-			Manager.sPlatforms.remove(i);
-		}
-		for(int i = 0; i < Manager.playerAttacks.size(); i++) {
-			Manager.playerAttacks.remove(i);
-		}
-		for(int i = 0; i < Manager.playerProjectiles.size(); i++) {
-			Manager.playerProjectiles.remove(i);
-		}
-		for(int i = 0; i < Manager.warriors.size(); i++) {
-			Manager.warriors.remove(i);
-		}
-		for(int i = 0; i < Manager.archers.size(); i++) {
-			Manager.archers.remove(i);
-		}
-		for(int i = 0; i < Manager.archerProjectiles.size(); i++) {
-			Manager.archerProjectiles.remove(i);
-		}
-		for(int i = 0; i < Manager.boss.size(); i++) {
-			Manager.boss.remove(i);
-		}
-		for(int i = 0; i < Manager.bossProjectiles.size(); i++) {
-			Manager.bossProjectiles.remove(i);
-		}
+		Manager.platforms.clear();
+		Manager.sPlatforms.clear();
+		Manager.playerAttacks.clear();
+		Manager.playerProjectiles.clear();
+		Manager.warriors.clear();
+		Manager.archers.clear();
+		Manager.archerProjectiles.clear();;
+		Manager.boss.clear();
+		Manager.bossProjectiles.clear();
 		
 		currentRoom++;
 		
 		if(currentRoom == 1) {
+			Manager.p.x = 60;
+			Manager.p.y = 552;
 			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
 			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
 			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
 			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
-			Manager.f = new Flag(680, 530, 40, 60);
+			Manager.sPlatforms.add(new SPlatform(0,420,625,10));
+			
+			Manager.platforms.add(new Platform(650,420,70,8));
+			Manager.platforms.add(new Platform(650,500,70,8));
+			
+			Manager.warriors.add(new Warrior(650, 552, 17, 38));
+			Manager.f = new Flag(680, 100, 40, 60);
 		}
 		
 		Manager.roomUpdated = false;
@@ -340,11 +330,6 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				Manager.p.right = true;
 			}
 			
-			if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
-				Manager.p.height = 19;
-				Manager.p.y += 19;
-			}
-			
 			if(e.getKeyCode() == KeyEvent.VK_SPACE){
 				if(e.isShiftDown() == true) {
 					Manager.p.fall();
@@ -419,10 +404,6 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 				Manager.p.right = false;
-			}
-			if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
-				Manager.p.height = 38;
-				Manager.p.y -= 19;
 			}
 		}
 		KPressed = false;

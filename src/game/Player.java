@@ -219,6 +219,7 @@ public class Player extends Object{
 			canFall = true;
 			isFalling = false;
 			doubleJump = true;
+			escPlatform = false;
 		}
 		
 		if(isFalling && doubleJump) {
