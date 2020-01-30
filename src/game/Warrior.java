@@ -11,7 +11,7 @@ public class Warrior extends Monster{
 	HealthBar hBar = new HealthBar(x - 4, y - 10, 25, 6, 1);
 	
 	Warrior(int x, int y, int width, int height){
-		super(x, y, width, height, 180);
+		super(x, y, width, height, 180, 0);
 		xV = 0;
 		yV = 0;
 		if(Game.difficulty == Game.EASY) {

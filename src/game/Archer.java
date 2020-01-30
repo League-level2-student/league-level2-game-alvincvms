@@ -14,7 +14,7 @@ public class Archer extends Monster{
 	int ACDTimer = 0;
 	
 	Archer(int x, int y, int width, int height){
-		super(x, y, width, height, 270);
+		super(x, y, width, height, 270, 0);
 		xV = 0;
 		yV = 0;
 		if(Game.difficulty == Game.EASY) {

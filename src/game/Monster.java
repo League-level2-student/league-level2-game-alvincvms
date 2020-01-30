@@ -10,13 +10,15 @@ public class Monster extends Object{
 	int kDir;
 	int dmg;
 	int vLength;
+	int EXvHeight;
 	int hurtTimer = 0;
 	Rectangle vBox;
 	
-	Monster(int x, int y, int width, int height, int viewLength){
+	Monster(int x, int y, int width, int height, int viewLength, int EXviewHeight){
 		super(x, y, width, height);
 		vLength = viewLength;
-		vBox = new Rectangle(x - vLength, y, x + width + vLength, height);
+		EXvHeight = EXviewHeight;
+		vBox = new Rectangle(x - vLength, y - EXvHeight, x + width + vLength, height + EXvHeight);
 	}
 	
 	public void knockback(int force, int dir) {
@@ -30,7 +32,7 @@ public class Monster extends Object{
 	}
 	
 	void update() {
-		vBox.setBounds(x - vLength, y, width + 2 * vLength, height);
+		vBox.setBounds(x - vLength, y - EXvHeight, width + 2 * vLength, height + EXvHeight);
 		super.update();
 	}
 	

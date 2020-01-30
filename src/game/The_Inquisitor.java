@@ -10,11 +10,12 @@ public class The_Inquisitor extends Monster{
 	boolean attackFinished = true;
 	int cdTimer = 0;
 	int atkCounter = 0;
+	boolean isAttacking = false;
 	
 	HealthBar hBar = new HealthBar(150, 100, 450, 20, 1);
 	
 	The_Inquisitor(int x, int y, int width, int height){
-		super(x, y, width, height, 240);
+		super(x, y, width, height, 240, 300);
 		xV = 0;
 		yV = 0;
 		hBar.outline = true;
@@ -63,12 +64,17 @@ public class The_Inquisitor extends Monster{
 			if(Game.difficulty == Game.NIGHTMARE) {
 				Manager.p.hurtTimer = 22;
 			}
-			Manager.p.health -= dmg;
+			if(isAttacking) {
+				Manager.p.health -= (int) (dmg * 2.4);
+			}
+			else {
+				Manager.p.health -= dmg;
+			}
 			Manager.p.knockback(11, facing);
 		}
 		
 		if(Monster.playerInSight(vBox)) {
-			vLength = 500;
+			vLength = 1000;
 			if(Manager.p.x < x) {
 				facing = Object.FACING_LEFT;
 			}
@@ -81,34 +87,108 @@ public class The_Inquisitor extends Monster{
 						if(facing == FACING_LEFT) {
 							ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 12, FACING_LEFT, (int) (dmg * 1.5), 12);
 							Manager.archerProjectiles.add(p);
+							p.xVelocity = 7;
 							p.attack();
 						}
 						if(facing == FACING_RIGHT) {
 							ArcherProjectile p = new ArcherProjectile(x + width - 21, y + 10, 21, 12, FACING_RIGHT, (int) (dmg * 1.5), 12);
 							Manager.archerProjectiles.add(p);
+							p.xVelocity = 7;
 							p.attack();
 						}
-						cdTimer = 8;
+						
+						if(Game.difficulty == Game.NIGHTMARE) {
+							cdTimer = 9;
+						}
+						else {
+							cdTimer = 8;
+						}
+						
 						atkCounter--;
 						if(atkCounter == 0) {
 							attackFinished = true;
-							cdTimer = 65;
+							cdTimer = 90;
 						}
 					}
 					if(attackMode == 2) {
-						if(Manager.)
+						if(isAttacking == false) {
+							if(Manager.p.x > x + width) {
+								if(Game.difficulty == Game.EASY) {
+									xV = 10;
+								}
+								if(Game.difficulty == Game.MEDIUM) {
+									xV = 12;
+								}
+								if(Game.difficulty == Game.HARD) {
+									xV = 14;
+								}
+								if(Game.difficulty == Game.EXPERT) {
+									xV = 16;
+								}
+								if(Game.difficulty == Game.NIGHTMARE) {
+									xV = 18;
+								}
+							}
+							if(Manager.p.x + width < x) {
+								if(Game.difficulty == Game.EASY) {
+									xV = -10;
+								}
+								if(Game.difficulty == Game.MEDIUM) {
+									xV = -12;
+								}
+								if(Game.difficulty == Game.HARD) {
+									xV = -14;
+								}
+								if(Game.difficulty == Game.EXPERT) {
+									xV = -16;
+								}
+								if(Game.difficulty == Game.NIGHTMARE) {
+									xV = -18;
+								}
+							}
+						}
 						m2Move();
+						
+						if(!isAttacking) {
+							atkCounter--;
+						}
+						if(atkCounter == 0) {
+							attackFinished = true;
+							cdTimer = 75;
+						}
+					}
+					if(attackMode == 3) {
+						
+						
+						if(atkCounter == 0) {
+							attackFinished = true;
+							cdTimer = 96;
+						}
 					}
 				}
 				else {
 					if(attackMode == 0 || attackMode == 3) {
-						changeMode(5);
+						if(Game.difficulty == Game.NIGHTMARE) {
+							changeMode(5);
+						}
+						else {
+							changeMode(4);
+						}
+						
 					}
 					else if(attackMode == 1) {
-						changeMode(3);
+						if(Game.difficulty == Game.NIGHTMARE) {
+							changeMode(5);
+						}
+						else if(Game.difficulty == Game.EXPERT) {
+							changeMode(4);
+						}
+						else {
+							changeMode(3);
+						}
 					}
 					else {
-						changeMode(0);
+						changeMode(12);
 					}
 				}
 			}
@@ -156,7 +236,10 @@ public class The_Inquisitor extends Monster{
 	}
 	
 	void m2Move() {
+		isAttacking = true;
 		int newX = x;
+		
+		newX += xV;
 		
 		Rectangle newCBox = new Rectangle(newX, y, width, height);
 		
@@ -172,7 +255,6 @@ public class The_Inquisitor extends Monster{
 				x = newX;
 				cdTimer = 25;
 			}
-			
 			if(xV > 0) {
 				while(Manager.checkSolidCollision(newCBox) == true) {
 					newX -= 1;
@@ -181,6 +263,8 @@ public class The_Inquisitor extends Monster{
 				x = newX;
 				cdTimer = 25;
 			}
+			
+			isAttacking = false;
 		}
 	}
 	
