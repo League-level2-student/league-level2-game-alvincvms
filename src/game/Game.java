@@ -32,6 +32,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	Manager manager = new Manager(player);
 	
 	int currentState = MAIN_MENU;
+	static int currentRoom = 0;
 	
 	public static int attackCooldown = 0;
 	
@@ -42,15 +43,13 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void start() {
+		/*
 		Manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-100,70,10));
 		Manager.platforms.add(new Platform(100,PixelLegend.HEIGHT-200,70,10));
 		Manager.platforms.add(new Platform(300,PixelLegend.HEIGHT-200,70,10));
 		Manager.platforms.add(new Platform(500,PixelLegend.HEIGHT-200,70,10));
 		Manager.sPlatforms.add(new SPlatform(200, PixelLegend.HEIGHT-100,70,10));
-		Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
-		Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
-		Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
-		Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+		*/
 		timer.start();
 	}
 	
@@ -196,6 +195,49 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		
 	}
 	
+	public static void updateRoom() {
+		for(int i = 0; i < Manager.platforms.size(); i++) {
+			Manager.platforms.remove(i);
+		}
+		for(int i = 0; i < Manager.sPlatforms.size(); i++) {
+			Manager.sPlatforms.remove(i);
+		}
+		for(int i = 0; i < Manager.playerAttacks.size(); i++) {
+			Manager.playerAttacks.remove(i);
+		}
+		for(int i = 0; i < Manager.playerProjectiles.size(); i++) {
+			Manager.playerProjectiles.remove(i);
+		}
+		for(int i = 0; i < Manager.warriors.size(); i++) {
+			Manager.warriors.remove(i);
+		}
+		for(int i = 0; i < Manager.archers.size(); i++) {
+			Manager.archers.remove(i);
+		}
+		for(int i = 0; i < Manager.archerProjectiles.size(); i++) {
+			Manager.archerProjectiles.remove(i);
+		}
+		for(int i = 0; i < Manager.boss.size(); i++) {
+			Manager.boss.remove(i);
+		}
+		for(int i = 0; i < Manager.bossProjectiles.size(); i++) {
+			Manager.bossProjectiles.remove(i);
+		}
+		
+		currentRoom++;
+		
+		if(currentRoom == 1) {
+			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+			Manager.f = new Flag(680, 530, 40, 60);
+		}
+		
+		Manager.roomUpdated = false;
+		System.out.println(currentRoom);
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		if(currentState == MAIN_MENU) {
@@ -273,6 +315,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			else if (currentState == MAIN_MENU) {
 				currentState = IN_GAME;
+				updateRoom();
 			}
 			else if(currentState == TUTORIAL) {
 				currentState = MAIN_MENU;
@@ -361,10 +404,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_L) {
-				Manager.p.health = 5000;
-				Manager.p.attackCooldown = -1;
-				Manager.p.mDmg = 200;
-				Manager.p.rDmg = 200;
+				updateRoom();
 			}
 			
 		}

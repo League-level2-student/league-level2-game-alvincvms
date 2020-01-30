@@ -6,12 +6,16 @@ import java.util.ArrayList;
 
 public class Manager {
 	static Player p;
+	static Flag f;
+	static Boolean roomUpdated = false;
+	
 	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
 	static ArrayList<PlayerProjectile> playerProjectiles = new ArrayList<PlayerProjectile>();
 	static ArrayList<Warrior> warriors = new ArrayList<Warrior>();
 	static ArrayList<Archer> archers = new ArrayList<Archer>();
 	static ArrayList<ArcherProjectile> archerProjectiles = new ArrayList<ArcherProjectile>();
 	static ArrayList<The_Inquisitor> boss = new ArrayList<The_Inquisitor>();
+	static ArrayList<BossProjectile> bossProjectiles = new ArrayList<BossProjectile>();
 	
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	static ArrayList<SPlatform> sPlatforms = new ArrayList<SPlatform>();
@@ -19,11 +23,13 @@ public class Manager {
 	
 	Manager(Player p) {
 		Manager.p = p;
+		f = new Flag(0,0,40,60);
 	}
 	
 	static void update() {
 		purgeObjects();
 		p.update();
+		f.update();
 		for(Platform p : Manager.platforms) {
 			p.update();
 		}
@@ -47,6 +53,9 @@ public class Manager {
 		}
 		for(The_Inquisitor b : boss) {
 			b.update();
+		}
+		for(BossProjectile p : bossProjectiles) {
+			p.update();
 		}
 		
 		if(playerAttacks.size() > 0) {
@@ -159,11 +168,26 @@ public class Manager {
 				}
 			}
 		}
+		if(bossProjectiles.size() > 0) {
+			for(int i = 0; i < bossProjectiles.size(); i++) {
+				if(bossProjectiles.get(i).cBox.intersects(p.cBox) && Manager.p.hurtTimer <= 0 && bossProjectiles.get(i).isAlive) {
+					Manager.p.health -= bossProjectiles.get(i).dmg;
+					Manager.p.knockback(10, bossProjectiles.get(i).facing);
+					Manager.p.hurtTimer = 24;
+					bossProjectiles.get(i).finishAttack();
+				}
+			}
+		}
 
+		if(f.cBox.intersects(p.cBox) && roomUpdated == false) {
+			Game.updateRoom();
+			roomUpdated = true;
+		}
 	}
 	
 	static void draw(Graphics g) {
 		p.draw(g);
+		f.draw(g);
 		for(Platform p : Manager.platforms) {
 			p.draw(g);
 		}
@@ -187,6 +211,9 @@ public class Manager {
 		}
 		for(The_Inquisitor b : boss) {
 			b.draw(g);
+		}
+		for(BossProjectile p : bossProjectiles) {
+			p.draw(g);
 		}
 	}
 	
@@ -255,6 +282,11 @@ public class Manager {
 		for(int i = 0; i < boss.size(); i++) {
 			if(!boss.get(i).isAlive) {
 				boss.remove(i);
+			}
+		}
+		for(int i = 0; i < bossProjectiles.size(); i++) {
+			if(!bossProjectiles.get(i).isAlive) {
+				bossProjectiles.remove(i);
 			}
 		}
 		

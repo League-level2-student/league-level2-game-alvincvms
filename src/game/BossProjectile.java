@@ -27,7 +27,7 @@ public class BossProjectile extends Object{
 	
 	void update() {
 		if(attack) {
-			y -= yVelocity;
+			y += yVelocity;
 		
 			if(Manager.checkSolidCollision(cBox) && spawned == true) {
 			finishAttack();

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class The_Inquisitor extends Monster{
 	int attackMode = 0;
@@ -114,36 +115,36 @@ public class The_Inquisitor extends Monster{
 						if(isAttacking == false) {
 							if(Manager.p.x > x + width) {
 								if(Game.difficulty == Game.EASY) {
-									xV = 10;
+									xV = 8;
 								}
 								if(Game.difficulty == Game.MEDIUM) {
-									xV = 12;
+									xV = 10;
 								}
 								if(Game.difficulty == Game.HARD) {
-									xV = 14;
+									xV = 13;
 								}
 								if(Game.difficulty == Game.EXPERT) {
-									xV = 16;
+									xV = 15;
 								}
 								if(Game.difficulty == Game.NIGHTMARE) {
-									xV = 18;
+									xV = 17;
 								}
 							}
 							if(Manager.p.x + width < x) {
 								if(Game.difficulty == Game.EASY) {
-									xV = -10;
+									xV = -8;
 								}
 								if(Game.difficulty == Game.MEDIUM) {
-									xV = -12;
+									xV = -10;
 								}
 								if(Game.difficulty == Game.HARD) {
-									xV = -14;
+									xV = -13;
 								}
 								if(Game.difficulty == Game.EXPERT) {
-									xV = -16;
+									xV = -15;
 								}
 								if(Game.difficulty == Game.NIGHTMARE) {
-									xV = -18;
+									xV = -17;
 								}
 							}
 						}
@@ -154,12 +155,13 @@ public class The_Inquisitor extends Monster{
 						}
 						if(atkCounter == 0) {
 							attackFinished = true;
-							cdTimer = 75;
+							cdTimer = 60;
 						}
 					}
 					if(attackMode == 3) {
-						
-						
+						m3Atk();
+						atkCounter--;
+						cdTimer = 6;
 						if(atkCounter == 0) {
 							attackFinished = true;
 							cdTimer = 96;
@@ -188,7 +190,7 @@ public class The_Inquisitor extends Monster{
 						}
 					}
 					else {
-						changeMode(12);
+						changeMode(20);
 					}
 				}
 			}
@@ -208,8 +210,6 @@ public class The_Inquisitor extends Monster{
 		if(cdTimer > 0) {
 			cdTimer--;
 		}
-		
-		System.out.println(attackMode);
 	}
 	
 	void gravity() {
@@ -266,6 +266,13 @@ public class The_Inquisitor extends Monster{
 			
 			isAttacking = false;
 		}
+	}
+	
+	void m3Atk() {
+		Random r = new Random();
+		BossProjectile p = new BossProjectile(r.nextInt(723) + 10, 10, 8, 20, (int) (dmg * 1.8));
+		Manager.bossProjectiles.add(p);
+		p.attack();
 	}
 	
 	void changeMode(int atk) {
