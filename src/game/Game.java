@@ -211,20 +211,71 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		if(currentRoom == 1) {
 			Manager.p.x = 60;
 			Manager.p.y = 552;
+			
 			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
 			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
 			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
 			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
 			Manager.sPlatforms.add(new SPlatform(0,420,625,10));
+			Manager.sPlatforms.add(new SPlatform(125,160,625,10));
 			
 			Manager.platforms.add(new Platform(650,420,70,8));
 			Manager.platforms.add(new Platform(650,500,70,8));
+			Manager.platforms.add(new Platform(28,160,70,8));
+			Manager.platforms.add(new Platform(28,240,70,8));
+			Manager.platforms.add(new Platform(28,320,70,8));
 			
 			Manager.warriors.add(new Warrior(650, 552, 17, 38));
+			Manager.warriors.add(new Warrior(200,382,17,38));
 			Manager.f = new Flag(680, 100, 40, 60);
 		}
+		if(currentRoom == 2) {
+			Manager.p.x = 60;
+			Manager.p.y = 552;
+			
+			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(330,70,10,530));
+			Manager.sPlatforms.add(new SPlatform(330,70,325,10));
+			Manager.sPlatforms.add(new SPlatform(0,500,295,10));
+			Manager.sPlatforms.add(new SPlatform(28,305,284,10));
+			Manager.sPlatforms.add(new SPlatform(390,150,360,10));
+			Manager.sPlatforms.add(new SPlatform(330,300,325,10));
+			Manager.sPlatforms.add(new SPlatform(390,480,360,10));
+			
+			Manager.platforms.add(new Platform(10,400,35,8));
+			Manager.platforms.add(new Platform(295,400,35,8));
+			Manager.platforms.add(new Platform(27,205,8,8));
+			Manager.platforms.add(new Platform(170,135,8,8));
+			Manager.platforms.add(new Platform(340,225,50,8));
+			Manager.platforms.add(new Platform(690,390,50,8));
+			
+			Manager.warriors.add(new Warrior(120, 462, 17, 38));
+			Manager.warriors.add(new Warrior(156, 267, 17, 38));
+			Manager.warriors.add(new Warrior(465, 112, 17, 38));
+			Manager.warriors.add(new Warrior(540, 442, 17, 38));
+			Manager.warriors.add(new Warrior(625, 552, 17, 38));
+			Manager.archers.add(new Archer(675, 552, 17, 38));
+			Manager.archers.add(new Archer(620, 32, 17, 38));
+			
+			Manager.f = new Flag(680,530,40,60);
+		}
+		if(currentRoom == 3) {
+			Manager.p.x = 60;
+			Manager.p.y = 552;
+			
+			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+			
+			Manager.boss.add(new The_Inquisitor(600, 100, 30, 56));
+			
+			Manager.f = new Flag(1000,1000,40,60);
+		}
 		
-		Manager.roomUpdated = false;
 		System.out.println(currentRoom);
 	}
 	

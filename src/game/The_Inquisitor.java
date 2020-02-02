@@ -161,7 +161,21 @@ public class The_Inquisitor extends Monster{
 					if(attackMode == 3) {
 						m3Atk();
 						atkCounter--;
-						cdTimer = 6;
+						if(Game.difficulty == Game.NIGHTMARE) {
+							cdTimer = 2;
+						}
+						else if(Game.difficulty == Game.EXPERT) {
+							cdTimer = 3;
+						}
+						else if(Game.difficulty == Game.HARD) {
+							cdTimer = 4;
+						}
+						else if(Game.difficulty == Game.MEDIUM) {
+							cdTimer = 5;
+						}
+						else {
+							cdTimer = 6;
+						}
 						if(atkCounter == 0) {
 							attackFinished = true;
 							cdTimer = 96;
@@ -190,7 +204,21 @@ public class The_Inquisitor extends Monster{
 						}
 					}
 					else {
-						changeMode(20);
+						if(Game.difficulty == Game.NIGHTMARE) {
+							changeMode(75);
+						}
+						else if(Game.difficulty == Game.EXPERT) {
+							changeMode(60);
+						}
+						else if(Game.difficulty == Game.HARD) {
+							changeMode(50);
+						}
+						else if(Game.difficulty == Game.MEDIUM) {
+							changeMode(40);
+						}
+						else {
+							changeMode(30);
+						}
 					}
 				}
 			}

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Manager {
 	static Player p;
 	static Flag f;
-	static Boolean roomUpdated = false;
 	
 	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
 	static ArrayList<PlayerProjectile> playerProjectiles = new ArrayList<PlayerProjectile>();
@@ -179,9 +178,8 @@ public class Manager {
 			}
 		}
 
-		if(f.cBox.intersects(p.cBox) && roomUpdated == false) {
+		if(f.cBox.intersects(p.cBox)) {
 			Game.updateRoom();
-			roomUpdated = true;
 		}
 	}
 	
