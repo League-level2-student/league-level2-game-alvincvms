@@ -127,8 +127,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		g.drawString("Tutorial", 320, 50);
 		g.drawString("Use the arrow keys to move left and right.", 160, 100);
 		g.drawString("Press [space] to jump.", 240, 140);
-		g.drawString("Press [F] to perform a melee attack.", 180, 220);
-		g.drawString("Press [G] to perform a ranged attack.", 180, 260);
+		g.drawString("Press [S] to perform a melee attack.", 180, 220);
+		g.drawString("Press [D] to perform a ranged attack.", 180, 260);
 		g.drawString("Press any key to continue", 220, 550);
 		g.setFont(new Font("Papyrus", Font.PLAIN, 20));
 		g.drawString("Press [space] while holding [shift] makes you fall faster or off a platform.", 50, 180);
@@ -202,7 +202,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		Manager.playerProjectiles.clear();
 		Manager.warriors.clear();
 		Manager.archers.clear();
-		Manager.archerProjectiles.clear();;
+		Manager.archerProjectiles.clear();
 		Manager.boss.clear();
 		Manager.bossProjectiles.clear();
 		
@@ -247,8 +247,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			
 			Manager.platforms.add(new Platform(10,400,35,8));
 			Manager.platforms.add(new Platform(295,400,35,8));
-			Manager.platforms.add(new Platform(27,205,8,8));
-			Manager.platforms.add(new Platform(170,135,8,8));
+			Manager.platforms.add(new Platform(27,205,10,8));
+			Manager.platforms.add(new Platform(170,135,10,8));
 			Manager.platforms.add(new Platform(340,225,50,8));
 			Manager.platforms.add(new Platform(690,390,50,8));
 			
@@ -263,17 +263,81 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.f = new Flag(680,530,40,60);
 		}
 		if(currentRoom == 3) {
-			Manager.p.x = 60;
+			Manager.p.x = 30;
 			Manager.p.y = 552;
 			
 			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
 			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
 			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
 			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(0,490,540,10));
+			Manager.sPlatforms.add(new SPlatform(670,120,10,480));
+			Manager.sPlatforms.add(new SPlatform(240,300,10,190));
+			Manager.sPlatforms.add(new SPlatform(240,300,50,10));
+			Manager.sPlatforms.add(new SPlatform(120,130,10,260));
+			Manager.sPlatforms.add(new SPlatform(180,22,8,58));
+			Manager.sPlatforms.add(new SPlatform(420,102,50,10));
 			
-			Manager.boss.add(new The_Inquisitor(600, 100, 30, 56));
+			Manager.platforms.add(new Platform(680,120,60,8));
+			Manager.platforms.add(new Platform(680,230,60,8));
+			Manager.platforms.add(new Platform(680,340,60,8));
+			Manager.platforms.add(new Platform(680,450,60,8));
+			Manager.platforms.add(new Platform(430,380,8,8));
+			Manager.platforms.add(new Platform(130,382,25,8));
+			Manager.platforms.add(new Platform(10,382,8,8));
+			Manager.platforms.add(new Platform(60,272,8,8));
+			Manager.platforms.add(new Platform(112,162,8,8));
+			Manager.platforms.add(new Platform(147,162,8,8));
+			Manager.platforms.add(new Platform(230,102,8,8));
+			Manager.platforms.add(new Platform(395,101,25,11));
+			Manager.platforms.add(new Platform(470,101,25,11));
+			Manager.platforms.add(new Platform(580,130,20,8));
 			
-			Manager.f = new Flag(1000,1000,40,60);
+			Manager.warriors.add(new Warrior(340, 452, 17, 38));
+			Manager.warriors.add(new Warrior(10, 452, 17, 38));
+			Manager.warriors.add(new Warrior(340, 552, 17, 38));
+			Manager.warriors.add(new Warrior(460, 552, 17, 38));
+			Manager.warriors.add(new Warrior(435, 64, 17, 38));
+			Manager.warriors.add(new Warrior(437, 64, 17, 38));
+			Manager.warriors.add(new Warrior(445, 64, 17, 38));
+			Manager.warriors.add(new Warrior(449, 64, 17, 38));
+			Manager.warriors.add(new Warrior(451, 64, 17, 38));
+			Manager.warriors.add(new Warrior(453, 64, 17, 38));
+			Manager.archers.add(new Archer(360, 552, 17, 38));
+			Manager.archers.add(new Archer(510, 552, 17, 38));
+			
+			Manager.f = new Flag(690,530,40,60);
+		}
+		if(currentRoom == 4) {
+			Manager.p.x = 17;
+			Manager.p.y = 552;
+			
+			Manager.sPlatforms.add(new SPlatform(0,0,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(0,420,625,10));
+			Manager.sPlatforms.add(new SPlatform(125,160,625,10));
+			Manager.sPlatforms.add(new SPlatform(450,500,75,10));
+			
+			Manager.platforms.add(new Platform(665,500,50,8));
+			Manager.platforms.add(new Platform(250,500,50,8));
+			
+			Manager.warriors.add(new Warrior(240, 552, 17, 38));
+			Manager.warriors.add(new Warrior(310, 552, 17, 38));
+			Manager.warriors.add(new Warrior(500, 552, 17, 38));
+			Manager.warriors.add(new Warrior(530, 552, 17, 38));
+			Manager.warriors.add(new Warrior(675, 552, 17, 38));
+			Manager.warriors.add(new Warrior(555, 552, 17, 38));
+			Manager.warriors.add(new Warrior(505, 462, 17, 38));
+			Manager.warriors.add(new Warrior(459, 462, 17, 38));
+			Manager.archers.add(new Archer(360, 552, 17, 38));
+			Manager.archers.add(new Archer(400, 552, 17, 38));
+			Manager.archers.add(new Archer(520, 552, 17, 38));
+			Manager.archers.add(new Archer(630, 552, 17, 38));
+			Manager.archers.add(new Archer(470, 462, 17, 38));
+			
+			Manager.f = new Flag(690,100,40,60);
 		}
 		
 		System.out.println(currentRoom);
@@ -390,7 +454,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				}
 			}
 			
-			if(e.getKeyCode() == KeyEvent.VK_F && attackCooldown == 0) {
+			if(e.getKeyCode() == KeyEvent.VK_S && attackCooldown == 0) {
 				int EXC = 1;
 				if(difficulty == MEDIUM) {
 					EXC = 2;
@@ -407,7 +471,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				Manager.p.attack();
 				attackCooldown = Manager.p.attackCooldown + EXC;
 			}
-			if(e.getKeyCode() == KeyEvent.VK_G && attackCooldown == 0) {
+			if(e.getKeyCode() == KeyEvent.VK_D && attackCooldown == 0) {
 				int EXC = 1;
 				if(difficulty == MEDIUM) {
 					EXC = 3;

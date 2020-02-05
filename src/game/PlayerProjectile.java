@@ -56,6 +56,6 @@ public class PlayerProjectile extends Object{
 	}
 	
 	void attack() {
-		timer.schedule(task, 1200);
+		timer.schedule(task, 800);
 	}
 }

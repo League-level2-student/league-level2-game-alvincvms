@@ -21,23 +21,23 @@ public class The_Inquisitor extends Monster{
 		yV = 0;
 		hBar.outline = true;
 		if(Game.difficulty == Game.EASY) {
-			maxHP = 500;
-			health = 500;
+			maxHP = 450;
+			health = 450;
 			dmg = 10;
 		}
 		if(Game.difficulty == Game.MEDIUM) {
-			maxHP = 680;
-			health = 680;
+			maxHP = 560;
+			health = 560;
 			dmg = 12;
 		}
 		if(Game.difficulty == Game.HARD) {
-			maxHP = 820;
-			health = 820;
+			maxHP = 720;
+			health = 720;
 			dmg = 15;
 		}
 		if(Game.difficulty == Game.EXPERT) {
-			maxHP = 950;
-			health = 950;
+			maxHP = 850;
+			health = 850;
 			dmg = 17;
 		}
 		if(Game.difficulty == Game.NIGHTMARE) {
@@ -113,7 +113,7 @@ public class The_Inquisitor extends Monster{
 					}
 					if(attackMode == 2) {
 						if(isAttacking == false) {
-							if(Manager.p.x > x + width) {
+							if(Manager.p.x > x) {
 								if(Game.difficulty == Game.EASY) {
 									xV = 8;
 								}
@@ -130,7 +130,7 @@ public class The_Inquisitor extends Monster{
 									xV = 17;
 								}
 							}
-							if(Manager.p.x + width < x) {
+							if(Manager.p.x + width <= x) {
 								if(Game.difficulty == Game.EASY) {
 									xV = -8;
 								}
@@ -300,6 +300,7 @@ public class The_Inquisitor extends Monster{
 		Random r = new Random();
 		BossProjectile p = new BossProjectile(r.nextInt(723) + 10, 10, 8, 20, (int) (dmg * 1.8));
 		Manager.bossProjectiles.add(p);
+		p.facing = r.nextInt(2);
 		p.attack();
 	}
 	
