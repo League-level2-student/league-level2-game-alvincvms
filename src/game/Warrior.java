@@ -23,16 +23,16 @@ public class Warrior extends Monster{
 			health = 90;
 		}
 		if(Game.difficulty == Game.HARD) {
-			maxHP = 120;
-			health = 120;
+			maxHP = 105;
+			health = 105;
 		}
 		if(Game.difficulty == Game.EXPERT) {
-			maxHP = 135;
-			health = 135;
+			maxHP = 110;
+			health = 110;
 		}
 		if(Game.difficulty == Game.NIGHTMARE) {
-			maxHP = 160;
-			health = 160;
+			maxHP = 108;
+			health = 108;
 		}
 	}
 	
@@ -84,22 +84,22 @@ public class Warrior extends Monster{
 				Manager.p.hurtTimer = 60;
 			}
 			if(Game.difficulty == Game.MEDIUM) {
-				Manager.p.health -= 19;
+				Manager.p.health -= 16;
 				Manager.p.knockback(12, facing);
 				Manager.p.hurtTimer = 50;
 			}
 			if(Game.difficulty == Game.HARD) {
-				Manager.p.health -= 24;
+				Manager.p.health -= 21;
 				Manager.p.knockback(12, facing);
 				Manager.p.hurtTimer = 36;
 			}
 			if(Game.difficulty == Game.EXPERT) {
-				Manager.p.health -= 33;
+				Manager.p.health -= 32;
 				Manager.p.knockback(12, facing);
 				Manager.p.hurtTimer = 29;
 			}
 			if(Game.difficulty == Game.NIGHTMARE) {
-				Manager.p.health -= 50;
+				Manager.p.health -= 42;
 				Manager.p.knockback(12, facing);
 				Manager.p.hurtTimer = 24;
 			}

@@ -138,7 +138,12 @@ public class Manager {
 						if(playerProjectiles.get(i).cBox.intersects(boss.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
 							boss.get(n).hurtTimer = 10;
-							boss.get(n).health -= playerProjectiles.get(i).dmg;
+							if(boss.get(n).attackMode == 3) {
+								boss.get(n).health -= (int) (playerProjectiles.get(i).dmg * 0.85);
+							}
+							else {
+								boss.get(n).health -= playerProjectiles.get(i).dmg;
+							}
 							if(boss.get(n).health <= 0) {
 								boss.get(n).isAlive = false;
 							}

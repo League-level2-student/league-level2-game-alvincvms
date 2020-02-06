@@ -32,25 +32,25 @@ public class Archer extends Monster{
 			attackCooldown = 92;
 		}
 		if(Game.difficulty == Game.HARD) {
-			maxHP = 75;
-			health = 75;
+			maxHP = 55;
+			health = 55;
 			dmg = 25;
 			PHT = 28;
 			attackCooldown = 75;
 		}
 		if(Game.difficulty == Game.EXPERT) {
-			maxHP = 95;
-			health = 95;
+			maxHP = 65;
+			health = 65;
 			dmg = 29;
 			PHT = 25;
-			attackCooldown = 50;
+			attackCooldown = 60;
 		}
 		if(Game.difficulty == Game.NIGHTMARE) {
-			maxHP = 120;
-			health = 120;
-			dmg = 65;
+			maxHP = 72;
+			health = 72;
+			dmg = 49;
 			PHT = 21;
-			attackCooldown = 36;
+			attackCooldown = 48;
 		}
 	}
 	

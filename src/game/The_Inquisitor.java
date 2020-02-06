@@ -21,19 +21,19 @@ public class The_Inquisitor extends Monster{
 		yV = 0;
 		hBar.outline = true;
 		if(Game.difficulty == Game.EASY) {
-			maxHP = 450;
-			health = 450;
-			dmg = 10;
-		}
-		if(Game.difficulty == Game.MEDIUM) {
 			maxHP = 560;
 			health = 560;
-			dmg = 12;
+			dmg = 9;
+		}
+		if(Game.difficulty == Game.MEDIUM) {
+			maxHP = 580;
+			health = 580;
+			dmg = 11;
 		}
 		if(Game.difficulty == Game.HARD) {
 			maxHP = 720;
 			health = 720;
-			dmg = 15;
+			dmg = 14;
 		}
 		if(Game.difficulty == Game.EXPERT) {
 			maxHP = 850;
@@ -244,7 +244,7 @@ public class The_Inquisitor extends Monster{
 		int newY = y;
 		Rectangle newCBox;
 		
-		if(yV < 20) {
+		if(yV < 25) {
 			yV += gravity;
 		}
 		newY += yV;

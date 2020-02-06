@@ -34,7 +34,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	int currentState = MAIN_MENU;
 	static int currentRoom = 0;
 	
-	public static int attackCooldown = 0;
+	public static int mAttackCooldown = 0;
+	public static int rAttackCooldown = 0;
 	
 	Timer timer;
 	
@@ -63,8 +64,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		//manager.checkPlatformCollision();
 		Manager.update();
 		
-		if(attackCooldown > 0) {
-			attackCooldown--;
+		if(mAttackCooldown > 0) {
+			mAttackCooldown--;
+		}
+		if(rAttackCooldown > 0) {
+			rAttackCooldown--;
 		}
 		//System.out.println(Manager.p.isFalling);
 		//System.out.println(manager.p.canFall);
@@ -291,7 +295,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.platforms.add(new Platform(230,102,8,8));
 			Manager.platforms.add(new Platform(395,101,25,11));
 			Manager.platforms.add(new Platform(470,101,25,11));
-			Manager.platforms.add(new Platform(580,130,20,8));
+			Manager.platforms.add(new Platform(580,130,34,8));
 			
 			Manager.warriors.add(new Warrior(340, 452, 17, 38));
 			Manager.warriors.add(new Warrior(10, 452, 17, 38));
@@ -319,25 +323,52 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.sPlatforms.add(new SPlatform(0,420,625,10));
 			Manager.sPlatforms.add(new SPlatform(125,160,625,10));
 			Manager.sPlatforms.add(new SPlatform(450,500,75,10));
+			Manager.sPlatforms.add(new SPlatform(330,350,75,10));
 			
 			Manager.platforms.add(new Platform(665,500,50,8));
 			Manager.platforms.add(new Platform(250,500,50,8));
+			Manager.platforms.add(new Platform(200,350,50,8));
+			Manager.platforms.add(new Platform(480,350,50,8));
+			Manager.platforms.add(new Platform(80,242,8,8));
 			
 			Manager.warriors.add(new Warrior(240, 552, 17, 38));
 			Manager.warriors.add(new Warrior(310, 552, 17, 38));
 			Manager.warriors.add(new Warrior(500, 552, 17, 38));
-			Manager.warriors.add(new Warrior(530, 552, 17, 38));
 			Manager.warriors.add(new Warrior(675, 552, 17, 38));
 			Manager.warriors.add(new Warrior(555, 552, 17, 38));
 			Manager.warriors.add(new Warrior(505, 462, 17, 38));
 			Manager.warriors.add(new Warrior(459, 462, 17, 38));
+			Manager.warriors.add(new Warrior(440, 382, 17, 38));
+			Manager.warriors.add(new Warrior(240, 382, 17, 38));
+			Manager.warriors.add(new Warrior(125, 382, 17, 38));
+			Manager.warriors.add(new Warrior(60, 382, 17, 38));
+			Manager.warriors.add(new Warrior(360, 312, 17, 38));
+			Manager.warriors.add(new Warrior(500, 122, 17, 38));
 			Manager.archers.add(new Archer(360, 552, 17, 38));
 			Manager.archers.add(new Archer(400, 552, 17, 38));
 			Manager.archers.add(new Archer(520, 552, 17, 38));
 			Manager.archers.add(new Archer(630, 552, 17, 38));
 			Manager.archers.add(new Archer(470, 462, 17, 38));
+			Manager.archers.add(new Archer(290, 382, 17, 38));
+			Manager.archers.add(new Archer(220, 382, 17, 38));
+			Manager.archers.add(new Archer(165, 382, 17, 38));
+			Manager.archers.add(new Archer(337, 312, 17, 38));
+			Manager.archers.add(new Archer(420, 122, 17, 38));
+			Manager.archers.add(new Archer(630, 122, 17, 38));
 			
 			Manager.f = new Flag(690,100,40,60);
+		}
+		if(currentRoom == 5) {
+			Manager.p.x = 35;
+			Manager.p.y = 552;
+			
+			Manager.sPlatforms.add(new SPlatform(0,PixelLegend.HEIGHT - 10,PixelLegend.WIDTH, 10));
+			Manager.sPlatforms.add(new SPlatform(0,0,10,PixelLegend.HEIGHT));
+			Manager.sPlatforms.add(new SPlatform(PixelLegend.WIDTH - 10,0,10,PixelLegend.HEIGHT));
+			
+			Manager.boss.add(new The_Inquisitor(600, 100, 30, 56));
+			
+			Manager.f = new Flag(1000,1000,40,60);
 		}
 		
 		System.out.println(currentRoom);
@@ -454,39 +485,39 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				}
 			}
 			
-			if(e.getKeyCode() == KeyEvent.VK_S && attackCooldown == 0) {
+			if(e.getKeyCode() == KeyEvent.VK_S && mAttackCooldown == 0) {
 				int EXC = 1;
 				if(difficulty == MEDIUM) {
 					EXC = 2;
 				}
 				if(difficulty == HARD) {
-					EXC = 4;
-				}
-				if(difficulty == EXPERT) {
-					EXC = 6;
-				}
-				if(difficulty == NIGHTMARE) {
-					EXC = 8;
-				}
-				Manager.p.attack();
-				attackCooldown = Manager.p.attackCooldown + EXC;
-			}
-			if(e.getKeyCode() == KeyEvent.VK_D && attackCooldown == 0) {
-				int EXC = 1;
-				if(difficulty == MEDIUM) {
 					EXC = 3;
 				}
-				if(difficulty == HARD) {
-					EXC = 5;
-				}
 				if(difficulty == EXPERT) {
-					EXC = 7;
+					EXC = 4;
 				}
 				if(difficulty == NIGHTMARE) {
-					EXC = 8;
+					EXC = 5;
+				}
+				Manager.p.attack();
+				mAttackCooldown = Manager.p.attackCooldown + EXC;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_D && rAttackCooldown == 0) {
+				int EXC = 2;
+				if(difficulty == MEDIUM) {
+					EXC = 4;
+				}
+				if(difficulty == HARD) {
+					EXC = 6;
+				}
+				if(difficulty == EXPERT) {
+					EXC = 9;
+				}
+				if(difficulty == NIGHTMARE) {
+					EXC = 10;
 				}
 				Manager.p.shoot();
-				attackCooldown = Manager.p.attackCooldown + EXC;
+				rAttackCooldown = Manager.p.attackCooldown + EXC;
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_U) {
@@ -500,7 +531,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_K) {
-				currentState = END_STATE;
+				Manager.p.health = 5000;
+				Manager.p.mDmg = 250;
+				Manager.p.rDmg = 200;
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_L) {
