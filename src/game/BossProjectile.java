@@ -2,8 +2,12 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
 
 public class BossProjectile extends Object{
 	int dmg;
@@ -12,6 +16,8 @@ public class BossProjectile extends Object{
 	boolean attack = false;
 	Timer timer;
 	TimerTask task = new Attack();
+	
+	public static BufferedImage fireball;
 	
 	class Attack extends TimerTask{
 		public void run() {
@@ -23,6 +29,12 @@ public class BossProjectile extends Object{
 		super(x, y, width, height);
 		this.dmg = dmg;
 		timer = new Timer();
+		try {
+			fireball = ImageIO.read(this.getClass().getResourceAsStream("fireball.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	void update() {
@@ -40,8 +52,7 @@ public class BossProjectile extends Object{
 	}
 	
 	void draw(Graphics g) {
-		g.setColor(Color.magenta);
-		g.fillRect(x, y, width, height);
+		g.drawImage(fireball, x-3, y-5, width+6, height+10, null);
 	}
 	
 	void finishAttack() {

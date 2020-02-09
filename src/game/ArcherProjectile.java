@@ -2,8 +2,12 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
 
 import game.PlayerProjectile.FinishAttack;
 
@@ -13,6 +17,10 @@ public class ArcherProjectile extends Object{
 	int xVelocity = 6;
 	boolean spawned = false;
 	int PHT;
+	
+	public static BufferedImage arrowR;
+	public static BufferedImage arrowL;
+	
 	Timer timer;
 	TimerTask task = new FinishAttack();
 	
@@ -28,6 +36,13 @@ public class ArcherProjectile extends Object{
 		this.dmg = dmg;
 		this.PHT = PHT;
 		timer = new Timer();
+		try {
+			arrowR = ImageIO.read(this.getClass().getResourceAsStream("arrowR.png"));
+			arrowL = ImageIO.read(this.getClass().getResourceAsStream("arrowL.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	void update() {
@@ -49,8 +64,12 @@ public class ArcherProjectile extends Object{
 	}
 	
 	void draw(Graphics g) {
-		g.setColor(Color.magenta);
-		g.fillRect(x, y, width, height);
+		if(facing == FACING_LEFT) {
+			g.drawImage(arrowL, x-15, y-8, width+30, height+16, null);
+		}
+		if(facing == FACING_RIGHT) {
+			g.drawImage(arrowR, x-15, y-8, width+30, height+16, null);
+		}
 	}
 	
 	void finishAttack() {

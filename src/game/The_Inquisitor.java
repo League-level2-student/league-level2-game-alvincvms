@@ -21,14 +21,14 @@ public class The_Inquisitor extends Monster{
 		yV = 0;
 		hBar.outline = true;
 		if(Game.difficulty == Game.EASY) {
-			maxHP = 560;
-			health = 560;
+			maxHP = 580;
+			health = 580;
 			dmg = 9;
 		}
 		if(Game.difficulty == Game.MEDIUM) {
-			maxHP = 580;
-			health = 580;
-			dmg = 11;
+			maxHP = 640;
+			health = 640;
+			dmg = 12;
 		}
 		if(Game.difficulty == Game.HARD) {
 			maxHP = 720;
@@ -48,6 +48,12 @@ public class The_Inquisitor extends Monster{
 	}
 	
 	void update() {
+		if(hurtTimer > 0) {
+			AM = 0.8;
+		}
+		else {
+			AM = 1;
+		}
 		
 		if(cBox.intersects(Manager.p.cBox) && Manager.p.hurtTimer <= 0) {
 			if(Game.difficulty == Game.EASY) {
@@ -66,10 +72,10 @@ public class The_Inquisitor extends Monster{
 				Manager.p.hurtTimer = 22;
 			}
 			if(isAttacking) {
-				Manager.p.health -= (int) (dmg * 2.4);
+				Manager.p.health -= (int) (dmg * 2.4 * AM);
 			}
 			else {
-				Manager.p.health -= dmg;
+				Manager.p.health -= (int) (dmg * AM);
 			}
 			Manager.p.knockback(11, facing);
 		}
@@ -86,20 +92,20 @@ public class The_Inquisitor extends Monster{
 				if(!attackFinished) {
 					if(attackMode == 1) {
 						if(facing == FACING_LEFT) {
-							ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 12, FACING_LEFT, (int) (dmg * 1.5), 12);
+							ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 12, FACING_LEFT, (int) (dmg * 1.5 * AM), 12);
 							Manager.archerProjectiles.add(p);
 							p.xVelocity = 7;
 							p.attack();
 						}
 						if(facing == FACING_RIGHT) {
-							ArcherProjectile p = new ArcherProjectile(x + width - 21, y + 10, 21, 12, FACING_RIGHT, (int) (dmg * 1.5), 12);
+							ArcherProjectile p = new ArcherProjectile(x + width - 21, y + 10, 21, 12, FACING_RIGHT, (int) (dmg * 1.5 * AM), 12);
 							Manager.archerProjectiles.add(p);
 							p.xVelocity = 7;
 							p.attack();
 						}
 						
 						if(Game.difficulty == Game.NIGHTMARE) {
-							cdTimer = 9;
+							cdTimer = 16;
 						}
 						else {
 							cdTimer = 8;
@@ -165,20 +171,20 @@ public class The_Inquisitor extends Monster{
 							cdTimer = 2;
 						}
 						else if(Game.difficulty == Game.EXPERT) {
-							cdTimer = 3;
+							cdTimer = 2;
 						}
 						else if(Game.difficulty == Game.HARD) {
-							cdTimer = 4;
+							cdTimer = 3;
 						}
 						else if(Game.difficulty == Game.MEDIUM) {
-							cdTimer = 5;
+							cdTimer = 4;
 						}
 						else {
-							cdTimer = 6;
+							cdTimer = 5;
 						}
 						if(atkCounter == 0) {
 							attackFinished = true;
-							cdTimer = 96;
+							cdTimer = 120;
 						}
 					}
 				}
@@ -205,19 +211,19 @@ public class The_Inquisitor extends Monster{
 					}
 					else {
 						if(Game.difficulty == Game.NIGHTMARE) {
-							changeMode(75);
+							changeMode(72);
 						}
 						else if(Game.difficulty == Game.EXPERT) {
-							changeMode(60);
+							changeMode(64);
 						}
 						else if(Game.difficulty == Game.HARD) {
-							changeMode(50);
+							changeMode(52);
 						}
 						else if(Game.difficulty == Game.MEDIUM) {
-							changeMode(40);
+							changeMode(45);
 						}
 						else {
-							changeMode(30);
+							changeMode(36);
 						}
 					}
 				}
@@ -281,7 +287,21 @@ public class The_Inquisitor extends Monster{
 					newCBox = new Rectangle(newX, y, width, height);
 				}
 				x = newX;
-				cdTimer = 25;
+				if(Game.difficulty == Game.EASY) {
+					cdTimer = 36;
+				}
+				else if(Game.difficulty == Game.MEDIUM) {
+					cdTimer = 25;
+				}
+				else if(Game.difficulty == Game.HARD) {
+					cdTimer = 18;
+				}
+				else if(Game.difficulty == Game.EXPERT) {
+					cdTimer = 8;
+				}
+				else {
+					cdTimer = 2;
+				}
 			}
 			if(xV > 0) {
 				while(Manager.checkSolidCollision(newCBox) == true) {
@@ -289,7 +309,21 @@ public class The_Inquisitor extends Monster{
 					newCBox = new Rectangle(newX, y, width, height);
 				}
 				x = newX;
-				cdTimer = 25;
+				if(Game.difficulty == Game.EASY) {
+					cdTimer = 36;
+				}
+				else if(Game.difficulty == Game.MEDIUM) {
+					cdTimer = 25;
+				}
+				else if(Game.difficulty == Game.HARD) {
+					cdTimer = 18;
+				}
+				else if(Game.difficulty == Game.EXPERT) {
+					cdTimer = 12;
+				}
+				else {
+					cdTimer = 6;
+				}
 			}
 			
 			isAttacking = false;
@@ -298,7 +332,7 @@ public class The_Inquisitor extends Monster{
 	
 	void m3Atk() {
 		Random r = new Random();
-		BossProjectile p = new BossProjectile(r.nextInt(723) + 10, 10, 8, 20, (int) (dmg * 1.8));
+		BossProjectile p = new BossProjectile(r.nextInt(723) + 10, 10, 8, 20, (int) (dmg * 1.8 * AM));
 		Manager.bossProjectiles.add(p);
 		p.facing = r.nextInt(2);
 		p.attack();

@@ -251,8 +251,22 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			
 			Manager.platforms.add(new Platform(10,400,35,8));
 			Manager.platforms.add(new Platform(295,400,35,8));
-			Manager.platforms.add(new Platform(27,205,10,8));
-			Manager.platforms.add(new Platform(170,135,10,8));
+			if(difficulty == EASY) {
+				Manager.platforms.add(new Platform(27,205,55,8));
+				Manager.platforms.add(new Platform(165,135,55,8));
+			}
+			else if(difficulty == MEDIUM) {
+				Manager.platforms.add(new Platform(27,205,45,8));
+				Manager.platforms.add(new Platform(170,135,45,8));
+			}
+			else if(difficulty == HARD) {
+				Manager.platforms.add(new Platform(27,205,35,8));
+				Manager.platforms.add(new Platform(172,135,35,8));
+			}
+			else {
+				Manager.platforms.add(new Platform(27,205,8,8));
+				Manager.platforms.add(new Platform(175,135,8,8));
+			}
 			Manager.platforms.add(new Platform(340,225,50,8));
 			Manager.platforms.add(new Platform(690,390,50,8));
 			
@@ -371,7 +385,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.f = new Flag(1000,1000,40,60);
 		}
 		
-		System.out.println(currentRoom);
+		//System.out.println(currentRoom);
 	}
 	
 	@Override

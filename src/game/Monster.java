@@ -12,6 +12,7 @@ public class Monster extends Object{
 	int vLength;
 	int EXvHeight;
 	int hurtTimer = 0;
+	double AM = 1;
 	Rectangle vBox;
 	
 	Monster(int x, int y, int width, int height, int viewLength, int EXviewHeight){

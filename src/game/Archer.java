@@ -172,14 +172,21 @@ public class Archer extends Monster{
 	}
 	
 	void attack() {
+		if(hurtTimer > 0) {
+			AM = 0.7;
+		}
+		else {
+			AM = 1;
+		}
+		
 		if(ACDTimer <= 0) {
 			if(facing == FACING_LEFT) {
-				ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_LEFT, dmg, PHT);
+				ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_LEFT, (int) (dmg * AM), PHT);
 				Manager.archerProjectiles.add(p);
 				p.attack();
 			}
 			if(facing == FACING_RIGHT) {
-				ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_RIGHT, dmg, PHT);
+				ArcherProjectile p = new ArcherProjectile(x, y + 10, 21, 8, FACING_RIGHT, (int) (dmg * AM), PHT);
 				Manager.archerProjectiles.add(p);
 				p.attack();
 			}
