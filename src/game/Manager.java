@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Manager {
 	static Player p;
 	static Flag f;
+	static boolean bossDefeated = false;
 	
 	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
 	static ArrayList<PlayerProjectile> playerProjectiles = new ArrayList<PlayerProjectile>();
@@ -285,6 +286,7 @@ public class Manager {
 		for(int i = 0; i < boss.size(); i++) {
 			if(!boss.get(i).isAlive) {
 				boss.remove(i);
+				bossDefeated = true;
 			}
 		}
 		for(int i = 0; i < bossProjectiles.size(); i++) {

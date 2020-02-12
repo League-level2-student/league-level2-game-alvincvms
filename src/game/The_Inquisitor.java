@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class The_Inquisitor extends Monster{
 	int attackMode = 0;
@@ -12,6 +16,12 @@ public class The_Inquisitor extends Monster{
 	int cdTimer = 0;
 	int atkCounter = 0;
 	boolean isAttacking = false;
+	
+	public static BufferedImage M0;
+	public static BufferedImage M1L;
+	public static BufferedImage M1R;
+	public static BufferedImage M2L;
+	public static BufferedImage M2R;
 	
 	HealthBar hBar = new HealthBar(150, 100, 450, 20, 1);
 	
@@ -44,6 +54,17 @@ public class The_Inquisitor extends Monster{
 			maxHP = 1200;
 			health = 1200;
 			dmg = 20;
+		}
+		
+		try {
+			M0 = ImageIO.read(this.getClass().getResourceAsStream("TheInquisitor.png"));
+			M1L = ImageIO.read(this.getClass().getResourceAsStream("TheInquisitorM1L.png"));
+			M1R = ImageIO.read(this.getClass().getResourceAsStream("TheInquisitorM1R.png"));
+			M2L = ImageIO.read(this.getClass().getResourceAsStream("TheInquisitorM2L.png"));
+			M2R = ImageIO.read(this.getClass().getResourceAsStream("TheInquisitorM2R.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -136,7 +157,7 @@ public class The_Inquisitor extends Monster{
 									xV = 17;
 								}
 							}
-							if(Manager.p.x + width <= x) {
+							else {
 								if(Game.difficulty == Game.EASY) {
 									xV = -8;
 								}
@@ -350,13 +371,26 @@ public class The_Inquisitor extends Monster{
 	}
 	
 	void draw(Graphics g) {
-		if(hurtTimer > 0) {
-			g.setColor(Color.pink);
+		if(attackMode == 0 || attackMode == 3) {
+			g.drawImage(M0, x-8, y-20, width+16, height+22, null);
 		}
-		else {
-			g.setColor(Color.red);
+		else if(attackMode == 1) {
+			if(facing == FACING_LEFT) {
+				g.drawImage(M1L, x-8, y-20, width+16, height+22, null);
+			}
+			if(facing == FACING_RIGHT) {
+				g.drawImage(M1R, x-8, y-20, width+16, height+22, null);
+			}
 		}
-		g.fillRect(x, y, width, height);
+		else if(attackMode == 2) {
+			if(xV < 0) {
+				g.drawImage(M2L, x-8, y-20, width+16, height+22, null);
+			}
+			if(xV > 0) {
+				g.drawImage(M2R, x-8, y-20, width+16, height+22, null);
+			}
+		}
+		
 		hBar.draw(g);
 		
 		g.setFont(new Font("TimesRoman", Font.ITALIC, 24));

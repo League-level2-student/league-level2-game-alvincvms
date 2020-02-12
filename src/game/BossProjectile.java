@@ -52,7 +52,7 @@ public class BossProjectile extends Object{
 	}
 	
 	void draw(Graphics g) {
-		g.drawImage(fireball, x-3, y-5, width+6, height+10, null);
+		g.drawImage(fireball, x-4, y-6, width+8, height+12, null);
 	}
 	
 	void finishAttack() {
