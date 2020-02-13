@@ -18,8 +18,10 @@ public class PlayerAttack extends Object{
 	Timer timer;
 	TimerTask task = new FinishAttack();
 	
-	public static BufferedImage Slash1;
-	public static BufferedImage Slash2;
+	public static BufferedImage Slash1L;
+	public static BufferedImage Slash1R;
+	public static BufferedImage Slash2L;
+	public static BufferedImage Slash2R;
 	Random r = new Random();
 	
 	class FinishAttack extends TimerTask{
@@ -34,8 +36,10 @@ public class PlayerAttack extends Object{
 		timer = new Timer();
 		this.dmg = dmg;
 		try {
-			Slash1 = ImageIO.read(this.getClass().getResourceAsStream("SwordSlash1.png"));
-			Slash2 = ImageIO.read(this.getClass().getResourceAsStream("SwordSlash2.png"));
+			Slash1L = ImageIO.read(this.getClass().getResourceAsStream("SwordSlash1L.png"));
+			Slash1R = ImageIO.read(this.getClass().getResourceAsStream("SwordSlash1R.png"));
+			Slash2L = ImageIO.read(this.getClass().getResourceAsStream("SwordSlash2L.png"));
+			Slash2R = ImageIO.read(this.getClass().getResourceAsStream("SwordSlash2R.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,11 +66,21 @@ public class PlayerAttack extends Object{
 	}
 	
 	void draw(Graphics g) {
+		if(atk == 0) {
+			if(facing == FACING_LEFT) {
+				g.drawImage(Slash1L, x, y, width, height, null);
+			}
+			if(facing == FACING_RIGHT) {
+				g.drawImage(Slash1R, x, y, width, height, null);
+			}
+		} 
 		if(atk == 1) {
-			
-		} unfinished
-		if(atk == 2) {
-			
+			if(facing == FACING_LEFT) {
+				g.drawImage(Slash2L, x, y, width, height, null);
+			}
+			if(facing == FACING_RIGHT) {
+				g.drawImage(Slash2R, x, y, width, height, null);
+			}
 		}
 	}
 	

@@ -3,6 +3,10 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Player extends Object{
 	
@@ -15,6 +19,8 @@ public class Player extends Object{
 	int mDmg = 18;
 	int rDmg = 15;
 	int hurtTimer = 0;
+	int walkTimer = 0;
+	int walkA = 0;
 	public static int playerX;
 	public static int playerY;
 	public static int playerWidth;
@@ -39,6 +45,13 @@ public class Player extends Object{
 	
 	HealthBar hBar = new HealthBar(75, 50, 175, 20, 1);
 	
+	public static  BufferedImage playerL;
+	public static  BufferedImage playerR;
+	public static  BufferedImage move1L;
+	public static  BufferedImage move1R;
+	public static  BufferedImage move2L;
+	public static  BufferedImage move2R;
+	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		facing = FACING_RIGHT;
@@ -47,6 +60,17 @@ public class Player extends Object{
 		maxHP = 200;
 		health = 200;
 		hBar.outline = true;
+		try {
+			playerL = ImageIO.read(this.getClass().getResourceAsStream("PlayerL.png"));
+			playerR = ImageIO.read(this.getClass().getResourceAsStream("PlayerR.png"));
+			move1L = ImageIO.read(this.getClass().getResourceAsStream("Move1L.png"));
+			move1R = ImageIO.read(this.getClass().getResourceAsStream("Move1R.png"));
+			move2L = ImageIO.read(this.getClass().getResourceAsStream("Move2L.png"));
+			move2R = ImageIO.read(this.getClass().getResourceAsStream("Move2R.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void jump() {
@@ -114,6 +138,18 @@ public class Player extends Object{
 		
 		if(hurtTimer > 0) {
 			hurtTimer--;
+		}
+		if(left || right) {
+			walkTimer--;
+		}
+		if(walkTimer < 1) {
+			walkTimer = 10;
+			if(walkA == 0) {
+				walkA = 1;
+			}
+			else if(walkA == 1) {
+				walkA = 0;
+			}
 		}
 	} 
 	
@@ -291,6 +327,30 @@ public class Player extends Object{
 			g.setColor(Color.blue);
 		}
 		g.fillRect(x, y, width, height);
+		if(left && !right) {
+			if(walkA == 0) {
+				g.drawImage(move1L, x-8, y-7, width+20, height+9, null);	
+			}
+			if(walkA == 1) {
+				g.drawImage(move2L, x-8, y-7, width+20, height+9, null);
+			}
+		}
+		else if(right && !left) {
+			if(walkA == 0) {
+				g.drawImage(move1R, x-8, y-7, width+20, height+9, null);	
+			}
+			if(walkA == 1) {
+				g.drawImage(move2R, x-8, y-7, width+20, height+9, null);
+			}
+		}
+		else {
+			if(facing == FACING_LEFT) {
+				g.drawImage(playerL, x-8, y-7, width+20, height+9, null);
+			}
+			if(facing == FACING_RIGHT) {
+				g.drawImage(playerR, x-8, y-7, width+20, height+9, null);
+			}
+		}
 		hBar.draw(g);
 	}
 	
