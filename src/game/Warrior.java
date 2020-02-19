@@ -166,7 +166,7 @@ public class Warrior extends Monster{
 				x = newX;
 			}
 			
-			if(xV > 0 && !(kXV < 0)|| kXV > 0) {
+			else if(xV > 0 && !(kXV < 0)|| kXV > 0) {
 				while(Manager.checkSolidCollision(newCBox) == true) {
 					newX -= 1;
 					newCBox = new Rectangle(newX, y, width, height);

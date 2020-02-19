@@ -8,6 +8,7 @@ public class Manager {
 	static Player p;
 	static Flag f;
 	static boolean bossDefeated = false;
+	static boolean playerDead = false;
 	
 	static ArrayList<PlayerAttack> playerAttacks = new ArrayList<PlayerAttack>();
 	static ArrayList<PlayerProjectile> playerProjectiles = new ArrayList<PlayerProjectile>();
@@ -287,6 +288,7 @@ public class Manager {
 			if(!boss.get(i).isAlive) {
 				boss.remove(i);
 				bossDefeated = true;
+				Game.colorTimer = 250;
 			}
 		}
 		for(int i = 0; i < bossProjectiles.size(); i++) {
@@ -294,7 +296,10 @@ public class Manager {
 				bossProjectiles.remove(i);
 			}
 		}
-		
+		if(p.health <= 0 && bossDefeated == false) {
+			playerDead = true;
+			Game.colorTimer = 250;
+		}
 	}
 	
 	/*void handleSCollision(SPlatform P) {

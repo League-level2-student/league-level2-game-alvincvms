@@ -15,6 +15,6 @@ public class Platform extends Object{
 	
 	void draw(Graphics g) {
 		g.setColor(Color.gray);
-		g.fillRect(x, y, width, height);
+		g.fillRect(x, y+1, width, height-1);
 	}
 }

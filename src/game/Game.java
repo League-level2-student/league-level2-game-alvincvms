@@ -33,9 +33,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	
 	int currentState = MAIN_MENU;
 	static int currentRoom = 0;
+	int tutorialPage = 1;
 	
 	public static int mAttackCooldown = 0;
 	public static int rAttackCooldown = 0;
+	public static int colorTimer = 0;
 	
 	Timer timer;
 	
@@ -70,6 +72,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		if(rAttackCooldown > 0) {
 			rAttackCooldown--;
 		}
+		if(Manager.playerDead == true) {
+			currentState = END_STATE;
+		}
+		if(Manager.bossDefeated == true) {
+			currentState = END_STATE;
+		}
 		//System.out.println(Manager.p.isFalling);
 		//System.out.println(manager.p.canFall);
 		//System.out.println(manager.p.escPlatform);
@@ -81,7 +89,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		//System.out.println(Manager.p.kXV);
 	}
 	void updateEnd() {
-		
+		if(colorTimer > 0) {
+			colorTimer--;
+		}
 	}
 	void updateSettings() {
 		
@@ -124,18 +134,54 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		}
 	}
 	void drawTutorial(Graphics g) {
-		g.setColor(Color.lightGray);
-		g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
-		g.setFont(new Font("Papyrus", Font.PLAIN, 24));
-		g.setColor(Color.black);
-		g.drawString("Tutorial", 320, 50);
-		g.drawString("Use the arrow keys to move left and right.", 160, 100);
-		g.drawString("Press [space] to jump.", 240, 140);
-		g.drawString("Press [S] to perform a melee attack.", 180, 220);
-		g.drawString("Press [D] to perform a ranged attack.", 180, 260);
-		g.drawString("Press any key to continue", 220, 550);
-		g.setFont(new Font("Papyrus", Font.PLAIN, 20));
-		g.drawString("Press [space] while holding [shift] makes you fall faster or off a platform.", 50, 180);
+		if(tutorialPage == 1) {
+			g.setColor(Color.lightGray);
+			g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+			g.setColor(Color.black);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 48));
+			g.drawString(Integer.toString(tutorialPage), 385, 95);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+			g.drawString("Tutorial", 320, 50);
+			g.drawString("Page:", 290, 90);
+			g.drawString("Use the arrow keys to move left and right.", 160, 160);
+			g.drawString("Press [space] to jump, press again to perform a double jump.", 50, 200);
+			g.drawString("Press [S] to perform a melee attack.", 180, 280);
+			g.drawString("Press [D] to perform a ranged attack.", 180, 320);
+			g.drawString("Press any other key to continue", 220, 550);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 20));
+			g.drawString("Press [space] while holding [shift] makes you fall faster or off a platform.", 50, 240);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
+			g.drawString("Press left arrow key to the previous page", 10, 520);
+			g.drawString("Press right arrow key to the next page", 460, 520);
+		}
+		if(tutorialPage == 2) {
+			g.setColor(Color.lightGray);
+			g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+			g.setColor(Color.black);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 48));
+			g.drawString(Integer.toString(tutorialPage), 385, 95);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+			g.drawString("Tutorial", 320, 50);
+			g.drawString("Page:", 290, 90);
+			g.drawString("Press any other key to continue", 220, 550);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
+			g.drawString("Press left arrow key to the previous page", 10, 520);
+			g.drawString("Press right arrow key to the next page", 460, 520);
+		}
+		if(tutorialPage == 3) {
+			g.setColor(Color.lightGray);
+			g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+			g.setColor(Color.black);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 48));
+			g.drawString(Integer.toString(tutorialPage), 385, 95);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+			g.drawString("Tutorial", 320, 50);
+			g.drawString("Page:", 290, 90);
+			g.drawString("Press any other key to continue", 220, 550);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
+			g.drawString("Press left arrow key to the previous page", 10, 520);
+			g.drawString("Press right arrow key to the next page", 460, 520);
+		}
 	}
 	void drawGame(Graphics g) {
 		Manager.draw(g);
@@ -151,7 +197,26 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		}
 	}
 	void drawEnd(Graphics g) {
-		
+		if(Manager.bossDefeated) {
+			g.setColor(new Color(255,255,colorTimer));
+			g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+			g.setColor(Color.black);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 60));
+			g.drawString("You Won!", 240, 280);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+			g.setColor(new Color(0 + colorTimer,0 + colorTimer,0));
+			g.drawString("Press any key to continue", 230, 550);
+		}
+		if(Manager.playerDead) {
+			g.setColor(new Color(255 - colorTimer,0,0));
+			g.fillRect(0, 0, PixelLegend.WIDTH, PixelLegend.HEIGHT);
+			g.setColor(Color.black);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 60));
+			g.drawString("You Died!", 240, 280);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
+			g.setColor(new Color(0 + colorTimer,0,0));
+			g.drawString("Press any key to continue", 230, 550);
+		}
 	}
 	void drawSettings(Graphics g) {
 		g.setColor(Color.lightGray);
@@ -423,8 +488,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		if(currentState == END_STATE) {
 			updateEnd();
 		}
-		repaint();
-		
+		repaint();		
 	}
 
 	@Override
@@ -468,10 +532,29 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				updateRoom();
 			}
 			else if(currentState == TUTORIAL) {
-				currentState = MAIN_MENU;
+				if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+					tutorialPage--;
+					if(tutorialPage == 0) {
+						tutorialPage = 3;
+					}
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					tutorialPage++;
+					if(tutorialPage == 4) {
+						tutorialPage = 1;
+					}
+				}
+				else {
+					currentState = MAIN_MENU;
+				}
 			}
 			else if(currentState == END_STATE) {
 				currentState = MAIN_MENU;
+				Manager.playerDead = false;
+				Manager.bossDefeated = false;
+				Manager.p = new Player(100, 100, 17, 38);
+				colorTimer = 0;
+				currentRoom = 0;
 			}
 			else if(currentState == SETTINGS) {
 				currentState = MAIN_MENU;

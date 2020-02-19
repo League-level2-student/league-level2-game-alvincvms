@@ -51,6 +51,16 @@ public class Player extends Object{
 	public static  BufferedImage move1R;
 	public static  BufferedImage move2L;
 	public static  BufferedImage move2R;
+	public static  BufferedImage jumpL;
+	public static  BufferedImage jumpR;
+	public static  BufferedImage hurtL;
+	public static  BufferedImage hurtR;
+	public static  BufferedImage hurtJL;
+	public static  BufferedImage hurtJR;
+	public static  BufferedImage hurtW1L;
+	public static  BufferedImage hurtW1R;
+	public static  BufferedImage hurtW2L;
+	public static  BufferedImage hurtW2R;
 	
 	public Player(int x, int y, int width, int height) {
 		super(x, y, width, height);
@@ -67,6 +77,16 @@ public class Player extends Object{
 			move1R = ImageIO.read(this.getClass().getResourceAsStream("Move1R.png"));
 			move2L = ImageIO.read(this.getClass().getResourceAsStream("Move2L.png"));
 			move2R = ImageIO.read(this.getClass().getResourceAsStream("Move2R.png"));
+			jumpL = ImageIO.read(this.getClass().getResourceAsStream("JumpL.png"));
+			jumpR = ImageIO.read(this.getClass().getResourceAsStream("JumpR.png"));
+			hurtL = ImageIO.read(this.getClass().getResourceAsStream("HurtL.png"));
+			hurtR = ImageIO.read(this.getClass().getResourceAsStream("HurtR.png"));
+			hurtJL = ImageIO.read(this.getClass().getResourceAsStream("HurtJL.png"));
+			hurtJR = ImageIO.read(this.getClass().getResourceAsStream("HurtJR.png"));
+			hurtW1L = ImageIO.read(this.getClass().getResourceAsStream("HurtW1L.png"));
+			hurtW1R = ImageIO.read(this.getClass().getResourceAsStream("HurtW1R.png"));
+			hurtW2L = ImageIO.read(this.getClass().getResourceAsStream("HurtW2L.png"));
+			hurtW2R = ImageIO.read(this.getClass().getResourceAsStream("HurtW2R.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -321,34 +341,71 @@ public class Player extends Object{
 	
 	void draw(Graphics g) {
 		if(hurtTimer > 0 && hurtTimer % 4 <= 2) {
-			g.setColor(Color.cyan);
+			if(isFalling) {
+				if(facing == FACING_LEFT) {
+					g.drawImage(hurtJL, x-8, y-7, width+20, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(hurtJR, x-8, y-7, width+20, height+9, null);
+				}
+			}
+			else if(left && !right) {
+				if(walkA == 0) {
+					g.drawImage(hurtW1L, x-8, y-7, width+20, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(hurtW2L, x-8, y-7, width+20, height+9, null);
+				}
+			}
+			else if(right && !left) {
+				if(walkA == 0) {
+					g.drawImage(hurtW1R, x-8, y-7, width+20, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(hurtW2R, x-8, y-7, width+20, height+9, null);
+				}
+			}
+			else {
+				if(facing == FACING_LEFT) {
+					g.drawImage(hurtL, x-8, y-7, width+20, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(hurtR, x-8, y-7, width+20, height+9, null);
+				}
+			}
 		}
 		else {
-			g.setColor(Color.blue);
-		}
-		g.fillRect(x, y, width, height);
-		if(left && !right) {
-			if(walkA == 0) {
-				g.drawImage(move1L, x-8, y-7, width+20, height+9, null);	
+			if(isFalling) {
+				if(facing == FACING_LEFT) {
+					g.drawImage(jumpL, x-10, y-7, width+20, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(jumpR, x-10, y-7, width+20, height+9, null);
+				}
 			}
-			if(walkA == 1) {
-				g.drawImage(move2L, x-8, y-7, width+20, height+9, null);
+			else if(left && !right) {
+				if(walkA == 0) {
+					g.drawImage(move1L, x-10, y-7, width+20, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(move2L, x-10, y-7, width+20, height+9, null);
+				}
 			}
-		}
-		else if(right && !left) {
-			if(walkA == 0) {
-				g.drawImage(move1R, x-8, y-7, width+20, height+9, null);	
+			else if(right && !left) {
+				if(walkA == 0) {
+					g.drawImage(move1R, x-10, y-7, width+20, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(move2R, x-10, y-7, width+20, height+9, null);
+				}
 			}
-			if(walkA == 1) {
-				g.drawImage(move2R, x-8, y-7, width+20, height+9, null);
-			}
-		}
-		else {
-			if(facing == FACING_LEFT) {
-				g.drawImage(playerL, x-8, y-7, width+20, height+9, null);
-			}
-			if(facing == FACING_RIGHT) {
-				g.drawImage(playerR, x-8, y-7, width+20, height+9, null);
+			else {
+				if(facing == FACING_LEFT) {
+					g.drawImage(playerL, x-10, y-7, width+20, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(playerR, x-10, y-7, width+20, height+9, null);
+				}
 			}
 		}
 		hBar.draw(g);
