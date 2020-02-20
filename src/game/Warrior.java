@@ -3,10 +3,29 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Warrior extends Monster{
 	
+	public static  BufferedImage warriorL;
+	public static  BufferedImage warriorR;
+	public static  BufferedImage move1L;
+	public static  BufferedImage move1R;
+	public static  BufferedImage move2L;
+	public static  BufferedImage move2R;
+	public static  BufferedImage hurtL;
+	public static  BufferedImage hurtR;
+	public static  BufferedImage hurtW1L;
+	public static  BufferedImage hurtW1R;
+	public static  BufferedImage hurtW2L;
+	public static  BufferedImage hurtW2R;
+	
+	int walkTimer = 0;
+	int walkA = 0;
 	//int alertCooldown = 0;
 	HealthBar hBar = new HealthBar(x - 4, y - 10, 25, 6, 1);
 	
@@ -33,6 +52,23 @@ public class Warrior extends Monster{
 		if(Game.difficulty == Game.NIGHTMARE) {
 			maxHP = 108;
 			health = 108;
+		}
+		try {
+			warriorL = ImageIO.read(this.getClass().getResourceAsStream("WarriorL.png"));
+			warriorR = ImageIO.read(this.getClass().getResourceAsStream("WarriorR.png"));
+			move1L = ImageIO.read(this.getClass().getResourceAsStream("WarriorW1L.png"));
+			move1R = ImageIO.read(this.getClass().getResourceAsStream("WarriorW1R.png"));
+			move2L = ImageIO.read(this.getClass().getResourceAsStream("WarriorW2L.png"));
+			move2R = ImageIO.read(this.getClass().getResourceAsStream("WarriorW2R.png"));
+			hurtL = ImageIO.read(this.getClass().getResourceAsStream("WHL.png"));
+			hurtR = ImageIO.read(this.getClass().getResourceAsStream("WHR.png"));
+			hurtW1L = ImageIO.read(this.getClass().getResourceAsStream("WHW1L.png"));
+			hurtW1R = ImageIO.read(this.getClass().getResourceAsStream("WHW1R.png"));
+			hurtW2L = ImageIO.read(this.getClass().getResourceAsStream("WHW2L.png"));
+			hurtW2R = ImageIO.read(this.getClass().getResourceAsStream("WHW2R.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -121,6 +157,19 @@ public class Warrior extends Monster{
 		if(hurtTimer > 0) {
 			hurtTimer--;
 		}
+		
+		if(xV != 0) {
+			walkTimer--;
+		}
+		if(walkTimer < 1) {
+			walkTimer = 10;
+			if(walkA == 0) {
+				walkA = 1;
+			}
+			else if(walkA == 1) {
+				walkA = 0;
+			}
+		}
 	}
 	
 	/*void casualMove() {
@@ -201,12 +250,57 @@ public class Warrior extends Monster{
 	
 	void draw(Graphics g) {
 		if(hurtTimer > 0) {
-			g.setColor(Color.pink);
+			if(xV < 0) {
+				if(walkA == 0) {
+					g.drawImage(hurtW1L, x-10, y-7, width+28, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(hurtW2L, x-10, y-7, width+28, height+9, null);
+				}
+			}
+			else if(xV > 0) {
+				if(walkA == 0) {
+					g.drawImage(hurtW1R, x-10, y-7, width+28, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(hurtW2R, x-10, y-7, width+28, height+9, null);
+				}
+			}
+			else {
+				if(facing == FACING_LEFT) {
+					g.drawImage(hurtL, x-10, y-7, width+28, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(hurtR, x-10, y-7, width+28, height+9, null);
+				}
+			}
 		}
 		else {
-			g.setColor(Color.red);
+			if(xV < 0) {
+				if(walkA == 0) {
+					g.drawImage(move1L, x-10, y-7, width+28, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(move2L, x-10, y-7, width+28, height+9, null);
+				}
+			}
+			else if(xV > 0) {
+				if(walkA == 0) {
+					g.drawImage(move1R, x-10, y-7, width+28, height+9, null);	
+				}
+				if(walkA == 1) {
+					g.drawImage(move2R, x-10, y-7, width+28, height+9, null);
+				}
+			}
+			else {
+				if(facing == FACING_LEFT) {
+					g.drawImage(warriorL, x-10, y-7, width+28, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(warriorR, x-10, y-7, width+28, height+9, null);
+				}
+			}
 		}
-		g.fillRect(x, y, width, height);
 		hBar.draw(g);
 	}
 }

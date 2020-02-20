@@ -143,10 +143,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
 			g.drawString("Tutorial", 320, 50);
 			g.drawString("Page:", 290, 90);
-			g.drawString("Use the arrow keys to move left and right.", 160, 160);
+			g.drawString("Use the [A] and [D] to move left and right.", 160, 160);
 			g.drawString("Press [space] to jump, press again to perform a double jump.", 50, 200);
-			g.drawString("Press [S] to perform a melee attack.", 180, 280);
-			g.drawString("Press [D] to perform a ranged attack.", 180, 320);
+			g.drawString("Press [J] to perform a melee attack.", 180, 280);
+			g.drawString("Press [K] to perform a ranged attack.", 180, 320);
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 20));
 			g.drawString("Press [space] while holding [shift] makes you fall faster or off a platform.", 50, 240);
@@ -163,6 +163,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
 			g.drawString("Tutorial", 320, 50);
 			g.drawString("Page:", 290, 90);
+			
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
@@ -177,6 +178,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
 			g.drawString("Tutorial", 320, 50);
 			g.drawString("Page:", 290, 90);
+			
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
@@ -548,7 +550,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 					currentState = MAIN_MENU;
 				}
 			}
-			else if(currentState == END_STATE) {
+			else if(currentState == END_STATE && colorTimer <= 75) {
 				currentState = MAIN_MENU;
 				Manager.playerDead = false;
 				Manager.bossDefeated = false;

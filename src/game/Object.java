@@ -2,6 +2,7 @@
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class Object {
 	
@@ -21,6 +22,8 @@ public class Object {
 	Rectangle cBox = new Rectangle();
 	
 	public Object(int x, int y, int width, int height){
+		Random r = new Random();
+		facing = r.nextInt(2);
 		this.x = x;
 		this.y = y;
 		this.width = width;
