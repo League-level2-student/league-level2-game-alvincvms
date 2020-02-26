@@ -108,7 +108,7 @@ public class Manager {
 						if(playerProjectiles.get(i).cBox.intersects(warriors.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
 							warriors.get(n).knockback(12, playerProjectiles.get(i).facing);
-							warriors.get(n).hurtTimer = 10;
+							warriors.get(n).hurtTimer = 18;
 							warriors.get(n).health -= playerProjectiles.get(i).dmg;
 							if(warriors.get(n).health <= 0) {
 								warriors.get(n).isAlive = false;
@@ -124,7 +124,7 @@ public class Manager {
 						if(playerProjectiles.get(i).cBox.intersects(archers.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
 							archers.get(n).knockback(10, playerProjectiles.get(i).facing);
-							archers.get(n).hurtTimer = 10;
+							archers.get(n).hurtTimer = 18;
 							archers.get(n).health -= playerProjectiles.get(i).dmg;
 							if(archers.get(n).health <= 0) {
 								archers.get(n).isAlive = false;
@@ -139,7 +139,7 @@ public class Manager {
 					for(int n = 0; n < boss.size(); n++) {
 						if(playerProjectiles.get(i).cBox.intersects(boss.get(n).cBox) && playerProjectiles.get(i).isAlive) {
 							playerProjectiles.get(i).isAlive = false;
-							boss.get(n).hurtTimer = 10;
+							boss.get(n).hurtTimer = 12;
 							if(boss.get(n).attackMode == 3) {
 								boss.get(n).health -= (int) (playerProjectiles.get(i).dmg * 0.85);
 							}

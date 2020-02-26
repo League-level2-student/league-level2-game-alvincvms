@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -30,10 +33,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	Object object;
 	Player player = new Player(100, 100, 17, 38);
 	Manager manager = new Manager(player);
+	Random r = new Random();
 	
 	int currentState = MAIN_MENU;
 	static int currentRoom = 0;
 	int tutorialPage = 1;
+	float tutorialHP;
 	
 	public static int mAttackCooldown = 0;
 	public static int rAttackCooldown = 0;
@@ -143,16 +148,22 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
 			g.drawString("Tutorial", 320, 50);
 			g.drawString("Page:", 290, 90);
-			g.drawString("Use the [A] and [D] to move left and right.", 160, 160);
+			g.drawString("Use the arrow keys to move left and right.", 160, 160);
 			g.drawString("Press [space] to jump, press again to perform a double jump.", 50, 200);
-			g.drawString("Press [J] to perform a melee attack.", 180, 280);
-			g.drawString("Press [K] to perform a ranged attack.", 180, 320);
+			g.drawString("Press [S] to perform a melee attack.", 180, 280);
+			g.drawString("Press [D] to perform a ranged attack.", 180, 320);
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 20));
 			g.drawString("Press [space] while holding [shift] makes you fall faster or off a platform.", 50, 240);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
 			g.drawString("Press right arrow key to the next page", 460, 520);
+			try {
+				g.drawImage(ImageIO.read(this.getClass().getResourceAsStream("PlayerR.png")), 330, 370, 85, 100, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if(tutorialPage == 2) {
 			g.setColor(Color.lightGray);
@@ -163,11 +174,22 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
 			g.drawString("Tutorial", 320, 50);
 			g.drawString("Page:", 290, 90);
-			
+			g.drawString("Your goal is to beat the final boss.", 100, 150);
+			g.drawString("To do so, you have to get to the flags first.", 95, 235);
+			g.drawString("Watch out for the enemies!", 200, 315);
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
 			g.drawString("Press right arrow key to the next page", 460, 520);
+			try {
+				g.drawImage(ImageIO.read(this.getClass().getResourceAsStream("TheInquisitor.png")), 570, 75, 60, 110, null);
+				g.drawImage(ImageIO.read(this.getClass().getResourceAsStream("Flag.png")), 590, 197, 60, 80, null);
+				g.drawImage(ImageIO.read(this.getClass().getResourceAsStream("WarriorR.png")), 200, 375, 100, 110, null);
+				g.drawImage(ImageIO.read(this.getClass().getResourceAsStream("ArcherL.png")), 440, 375, 100, 110, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if(tutorialPage == 3) {
 			g.setColor(Color.lightGray);
@@ -178,11 +200,22 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.setFont(new Font("Papyrus", Font.PLAIN, 24));
 			g.drawString("Tutorial", 320, 50);
 			g.drawString("Page:", 290, 90);
-			
+			g.drawString("This is your health bar,", 300, 140);
+			g.drawString("it indicates the amount of HP you have left.", 280, 170);
+			g.drawString("You loses if you run out of HP or failed to defeat the boss.", 90, 220);
+			g.drawString("A melee attack allows you to perform a sword slash that", 90, 280);
+			g.drawString("is able to block enemy arrows and has a fast cooldown time.", 80, 310);
+			g.drawString("A ranged attack allows you to shoot an arrow that does", 95, 370);
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
 			g.drawString("Press right arrow key to the next page", 460, 520);
+			g.setFont(new Font("Papyrus", Font.PLAIN, 22));
+			g.drawString("less damage than melee attacks but is able to hit enemies from a distance", 24, 400);
+			
+			HealthBar hp = new HealthBar(75, 125, 175, 20, tutorialHP);
+			hp.outline = true;
+			hp.draw(g);
 		}
 	}
 	void drawGame(Graphics g) {
@@ -534,6 +567,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				updateRoom();
 			}
 			else if(currentState == TUTORIAL) {
+				tutorialHP = r.nextFloat();
 				if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 					tutorialPage--;
 					if(tutorialPage == 0) {

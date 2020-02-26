@@ -3,8 +3,21 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Archer extends Monster{
+	
+	public static BufferedImage archerL;
+	public static BufferedImage archerR;
+	public static BufferedImage atkL;
+	public static BufferedImage atkR;
+	public static BufferedImage hurtL;
+	public static BufferedImage hurtR;
+	public static BufferedImage atkHL;
+	public static BufferedImage atkHR;
 
 	HealthBar hBar = new HealthBar(x - 4, y - 10, 25, 6, 1);
 	int AR = 160;
@@ -12,6 +25,7 @@ public class Archer extends Monster{
 	
 	public int attackCooldown;
 	int ACDTimer = 0;
+	int drawTimer = 0;
 	
 	Archer(int x, int y, int width, int height){
 		super(x, y, width, height, 270, 0);
@@ -51,6 +65,19 @@ public class Archer extends Monster{
 			dmg = 49;
 			PHT = 21;
 			attackCooldown = 48;
+		}
+		try {
+			archerL = ImageIO.read(this.getClass().getResourceAsStream("ArcherL.png"));
+			archerR = ImageIO.read(this.getClass().getResourceAsStream("ArcherR.png"));
+			atkL = ImageIO.read(this.getClass().getResourceAsStream("ArcherATKL.png"));
+			atkR = ImageIO.read(this.getClass().getResourceAsStream("ArcherATKR.png"));
+			hurtL = ImageIO.read(this.getClass().getResourceAsStream("AHL.png"));
+			hurtR = ImageIO.read(this.getClass().getResourceAsStream("AHR.png"));
+			atkHL = ImageIO.read(this.getClass().getResourceAsStream("AAHL.png"));
+			atkHR = ImageIO.read(this.getClass().getResourceAsStream("AAHR.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -99,6 +126,9 @@ public class Archer extends Monster{
 		}
 		if(ACDTimer > 0) {
 			ACDTimer--;
+		}
+		if(drawTimer > 0) {
+			drawTimer--;
 		}
 		
 	}
@@ -191,17 +221,47 @@ public class Archer extends Monster{
 				p.attack();
 			}
 			ACDTimer = attackCooldown;
+			drawTimer = 36;
 		}
 	}
 	
 	void draw(Graphics g) {
 		if(hurtTimer > 0) {
-			g.setColor(new Color(204, 153, 255));
+			if(drawTimer > 0) {
+				if(facing == FACING_LEFT) {
+					g.drawImage(atkHL, x-10, y-7, width+28, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(atkHR, x-10, y-7, width+28, height+9, null);
+				}
+			}
+			else {
+				if(facing == FACING_LEFT) {
+					g.drawImage(hurtL, x-10, y-7, width+28, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(hurtR, x-10, y-7, width+28, height+9, null);
+				}
+			}
 		}
 		else {
-			g.setColor(new Color(102, 0, 204));
+			if(drawTimer > 0) {
+				if(facing == FACING_LEFT) {
+					g.drawImage(atkL, x-10, y-7, width+28, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(atkR, x-10, y-7, width+28, height+9, null);
+				}
+			}
+			else {
+				if(facing == FACING_LEFT) {
+					g.drawImage(archerL, x-10, y-7, width+28, height+9, null);
+				}
+				if(facing == FACING_RIGHT) {
+					g.drawImage(archerR, x-10, y-7, width+28, height+9, null);
+				}
+			}
 		}
-		g.fillRect(x, y, width, height);
 		hBar.draw(g);
 	}
 	
