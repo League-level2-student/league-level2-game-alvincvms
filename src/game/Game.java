@@ -206,6 +206,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.drawString("A melee attack allows you to perform a sword slash that", 90, 280);
 			g.drawString("is able to block enemy arrows and has a fast cooldown time.", 80, 310);
 			g.drawString("A ranged attack allows you to shoot an arrow that does", 95, 370);
+			g.drawString("Gray blocks are platforms that you can jump onto", 95, 455);
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
