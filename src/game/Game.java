@@ -7,13 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
 public class Game extends JPanel implements ActionListener, KeyListener{
 
@@ -43,6 +49,15 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	public static int mAttackCooldown = 0;
 	public static int rAttackCooldown = 0;
 	public static int colorTimer = 0;
+	
+	static Song menu = new Song("New Hero in Town.mp3");
+	static Song game = new Song("Raving Energy.mp3");
+	static Song boss = new Song("Metalmania.mp3");
+	static Song win = new Song("Flying Kerfuffle.mp3");
+	static Song loss = new Song("Man Down.mp3");
+	static Song swoosh1 = new Song("swoosh1.mp3");
+	static Song swoosh2 = new Song("swoosh2.mp3");
+	static Song bow = new Song("bow.mp3");
 	
 	Timer timer;
 	
@@ -206,13 +221,13 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			g.drawString("A melee attack allows you to perform a sword slash that", 90, 280);
 			g.drawString("is able to block enemy arrows and has a fast cooldown time.", 80, 310);
 			g.drawString("A ranged attack allows you to shoot an arrow that does", 95, 370);
-			g.drawString("Gray blocks are platforms that you can jump onto", 95, 455);
+			g.drawString("Gray blocks are platforms that you can jump onto.", 95, 455);
 			g.drawString("Press any other key to continue", 220, 550);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 16));
 			g.drawString("Press left arrow key to the previous page", 10, 520);
 			g.drawString("Press right arrow key to the next page", 460, 520);
 			g.setFont(new Font("Papyrus", Font.PLAIN, 22));
-			g.drawString("less damage than melee attacks but is able to hit enemies from a distance", 24, 400);
+			g.drawString("less damage than melee attacks but is able to hit enemies from a distance.", 24, 400);
 			
 			HealthBar hp = new HealthBar(75, 125, 175, 20, tutorialHP);
 			hp.outline = true;
@@ -301,6 +316,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	public static void updateRoom() {
+		stopAll();
 		Manager.platforms.clear();
 		Manager.sPlatforms.clear();
 		Manager.playerAttacks.clear();
@@ -333,6 +349,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.warriors.add(new Warrior(650, 552, 17, 38));
 			Manager.warriors.add(new Warrior(200,382,17,38));
 			Manager.f = new Flag(680, 100, 40, 60);
+			game.play();
 		}
 		if(currentRoom == 2) {
 			Manager.p.x = 60;
@@ -380,6 +397,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.archers.add(new Archer(620, 32, 17, 38));
 			
 			Manager.f = new Flag(680,530,40,60);
+			game.play();
 		}
 		if(currentRoom == 3) {
 			Manager.p.x = 30;
@@ -426,6 +444,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.archers.add(new Archer(510, 552, 17, 38));
 			
 			Manager.f = new Flag(690,530,40,60);
+			game.play();
 		}
 		if(currentRoom == 4) {
 			Manager.p.x = 17;
@@ -472,6 +491,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.archers.add(new Archer(630, 122, 17, 38));
 			
 			Manager.f = new Flag(690,100,40,60);
+			game.play();
 		}
 		if(currentRoom == 5) {
 			Manager.p.x = 35;
@@ -484,6 +504,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			Manager.boss.add(new The_Inquisitor(600, 100, 30, 56));
 			
 			Manager.f = new Flag(1000,1000,40,60);
+			boss.play();
 		}
 		
 		//System.out.println(currentRoom);
@@ -592,6 +613,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 				Manager.p = new Player(100, 100, 17, 38);
 				colorTimer = 0;
 				currentRoom = 0;
+				stopAll();
+				menu.play();
 			}
 			else if(currentState == SETTINGS) {
 				currentState = MAIN_MENU;
@@ -691,4 +714,86 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 		KPressed = false;
 	}
 
+	static void stopAll() {
+		menu.stop();
+		game.stop();
+		boss.stop();
+		win.stop();
+		loss.stop();
+	}
+}
+
+class Song {
+
+	private int duration;
+	private String songAddress;
+	private AdvancedPlayer mp3Player;
+	private InputStream songStream;
+
+	public Song(String songAddress) {
+		this.songAddress = songAddress;
+	}
+
+	public void play() {
+		loadFile();
+		if (songStream != null) {
+			loadPlayer();
+			startSong();
+		} else
+			System.err.println("Unable to load file: " + songAddress);
+	}
+
+	public void setDuration(int seconds) {
+		this.duration = seconds * 100;
+	}
+
+	public void stop() {
+		if (mp3Player != null)
+			mp3Player.close();
+	}
+
+	private void startSong() {
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					if (duration > 0)
+						mp3Player.play(duration);
+					else
+						mp3Player.play();
+				} catch (Exception e) {
+				}
+			}
+		};
+		t.start();
+	}
+
+	private void loadPlayer() {
+		try {
+			this.mp3Player = new AdvancedPlayer(songStream);
+		} catch (Exception e) {
+		}
+	}
+
+	private void loadFile() {
+		if (songAddress.contains("http"))
+			this.songStream = loadStreamFromInternet();
+		else
+			this.songStream = loadStreamFromComputer();
+	}
+
+	private InputStream loadStreamFromInternet() {
+		try {
+			return new URL(songAddress).openStream();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private InputStream loadStreamFromComputer() {
+		try {
+			return new FileInputStream(songAddress);
+		} catch (FileNotFoundException e) {
+			return this.getClass().getResourceAsStream(songAddress);
+		}
+	}
 }

@@ -77,6 +77,7 @@ public class ArcherProjectile extends Object{
 	}
 	
 	void attack() {
+		Game.bow.play();
 		timer.schedule(task, 5000);
 	}
 }

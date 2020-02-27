@@ -289,6 +289,8 @@ public class Manager {
 				boss.remove(i);
 				bossDefeated = true;
 				Game.colorTimer = 250;
+				Game.stopAll();
+				Game.win.play();
 			}
 		}
 		for(int i = 0; i < bossProjectiles.size(); i++) {
@@ -299,6 +301,8 @@ public class Manager {
 		if(p.health <= 0 && bossDefeated == false) {
 			playerDead = true;
 			Game.colorTimer = 250;
+			Game.stopAll();
+			Game.loss.play();
 		}
 	}
 	

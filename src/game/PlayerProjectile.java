@@ -74,6 +74,7 @@ public class PlayerProjectile extends Object{
 	}
 	
 	void attack() {
+		Game.bow.play();
 		timer.schedule(task, 800);
 	}
 }

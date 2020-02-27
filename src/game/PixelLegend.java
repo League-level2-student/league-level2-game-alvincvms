@@ -31,5 +31,6 @@ public class PixelLegend {
 		window.setVisible(true);
 		//window.setResizable(false);
 		game.start();
+		game.menu.play();
 	}
 }

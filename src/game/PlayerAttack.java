@@ -85,6 +85,12 @@ public class PlayerAttack extends Object{
 	}
 	
 	void attack() {
+		if(atk == 0) {
+			Game.swoosh1.play();
+		}
+		if(atk == 1) {
+			Game.swoosh2.play();
+		}
 		timer.schedule(task, 160);
 	}
 }
