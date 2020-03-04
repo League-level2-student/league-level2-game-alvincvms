@@ -214,6 +214,9 @@ public class The_Inquisitor extends Monster{
 						if(Game.difficulty == Game.NIGHTMARE) {
 							changeMode(5);
 						}
+						else if(Game.difficulty == Game.EASY){
+							changeMode(3);
+						}
 						else {
 							changeMode(4);
 						}
@@ -309,19 +312,19 @@ public class The_Inquisitor extends Monster{
 				}
 				x = newX;
 				if(Game.difficulty == Game.EASY) {
-					cdTimer = 36;
-				}
-				else if(Game.difficulty == Game.MEDIUM) {
 					cdTimer = 25;
 				}
-				else if(Game.difficulty == Game.HARD) {
+				else if(Game.difficulty == Game.MEDIUM) {
 					cdTimer = 18;
 				}
-				else if(Game.difficulty == Game.EXPERT) {
+				else if(Game.difficulty == Game.HARD) {
 					cdTimer = 8;
 				}
+				else if(Game.difficulty == Game.EXPERT) {
+					cdTimer = 4;
+				}
 				else {
-					cdTimer = 2;
+					cdTimer = 1;
 				}
 			}
 			if(xV > 0) {
@@ -331,19 +334,19 @@ public class The_Inquisitor extends Monster{
 				}
 				x = newX;
 				if(Game.difficulty == Game.EASY) {
-					cdTimer = 36;
-				}
-				else if(Game.difficulty == Game.MEDIUM) {
 					cdTimer = 25;
 				}
-				else if(Game.difficulty == Game.HARD) {
+				else if(Game.difficulty == Game.MEDIUM) {
 					cdTimer = 18;
 				}
+				else if(Game.difficulty == Game.HARD) {
+					cdTimer = 8;
+				}
 				else if(Game.difficulty == Game.EXPERT) {
-					cdTimer = 12;
+					cdTimer = 4;
 				}
 				else {
-					cdTimer = 6;
+					cdTimer = 1;
 				}
 			}
 			

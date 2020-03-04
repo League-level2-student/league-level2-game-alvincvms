@@ -58,6 +58,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	static Song swoosh1 = new Song("swoosh1.mp3");
 	static Song swoosh2 = new Song("swoosh2.mp3");
 	static Song bow = new Song("bow.mp3");
+	static Song hit = new Song("hit.mp3");
+	static Song hitArmor = new Song("hitArmor.mp3");
+	static Song block = new Song("block.mp3");
 	
 	Timer timer;
 	
@@ -232,6 +235,9 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			HealthBar hp = new HealthBar(75, 125, 175, 20, tutorialHP);
 			hp.outline = true;
 			hp.draw(g);
+			
+			Platform p = new Platform(300, 480, 150, 10);
+			p.draw(g);
 		}
 	}
 	void drawGame(Graphics g) {
@@ -694,7 +700,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_L) {
-				updateRoom();
+				if(currentRoom < 5) {
+					updateRoom();
+				}
+				else {
+					Manager.bossDefeated = true;
+				}
 			}
 			
 		}
@@ -725,10 +736,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
 class Song {
 
-	private int duration;
-	private String songAddress;
-	private AdvancedPlayer mp3Player;
-	private InputStream songStream;
+	int duration;
+	String songAddress;
+	AdvancedPlayer mp3Player;
+	InputStream songStream;
 
 	public Song(String songAddress) {
 		this.songAddress = songAddress;
