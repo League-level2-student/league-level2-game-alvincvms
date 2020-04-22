@@ -518,6 +518,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		if(currentState == MAIN_MENU) {
 			drawMainMenu(g);
 		}
